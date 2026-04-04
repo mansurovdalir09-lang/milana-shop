@@ -879,13 +879,18 @@ footer{
     <div class="catalog-filters" id="catalog-filters">
       <button class="filter-btn active" data-brand="all" onclick="setFilter('brand','all',this)">Все бренды</button>
       <button class="filter-btn" data-brand="milana" onclick="setFilter('brand','milana',this)">Milana</button>
+      <button class="filter-btn" data-brand="marabut" onclick="setFilter('brand','marabut',this)">Marabut</button>
+      <button class="filter-btn" data-brand="другие бренды" onclick="setFilter('brand','другие бренды',this)">Другие бренды</button>
       <div class="filter-sep"></div>
       <button class="filter-btn active" data-cat="all" onclick="setFilter('cat','all',this)">Все</button>
       <button class="filter-btn" data-cat="Пижамы" onclick="setFilter('cat','Пижамы',this)">Пижамы</button>
       <button class="filter-btn" data-cat="Комплекты" onclick="setFilter('cat','Комплекты',this)">Комплекты</button>
       <button class="filter-btn" data-cat="Туники" onclick="setFilter('cat','Туники',this)">Туники</button>
+      <button class="filter-btn" data-cat="Сорочки" onclick="setFilter('cat','Сорочки',this)">Сорочки</button>
       <button class="filter-btn" data-cat="Детское" onclick="setFilter('cat','Детское',this)">Детское</button>
-      <button class="filter-btn" data-cat="Прочее" onclick="setFilter('cat','Прочее',this)">Прочее</button>
+      <button class="filter-btn" data-cat="Трусы" onclick="setFilter('cat','Трусы',this)">Трусы</button>
+      <button class="filter-btn" data-cat="Лифчики" onclick="setFilter('cat','Лифчики',this)">Лифчики</button>
+      <button class="filter-btn" data-cat="Комплекты белья" onclick="setFilter('cat','Комплекты белья',this)">Комплекты белья</button>
     </div>
   </div>
   <div class="catalog-grid" id="catalog-grid"></div>
@@ -1021,20 +1026,26 @@ footer{
 <script>
 // ─────────────────── DATA ───────────────────
 const products = [
-  {id:1,  name:"Майки и шорты",                brand:"Milana",category:"Комплекты",pricePerItem:650, packSize:6,packPrice:4100,badge:"Хит"},
-  {id:2,  name:"Футболка и шорты",             brand:"Milana",category:"Комплекты",pricePerItem:650, packSize:6,packPrice:4100},
-  {id:3,  name:"Пижама с короткими рукавами",  brand:"Milana",category:"Пижамы",   pricePerItem:850, packSize:6,packPrice:5400},
-  {id:4,  name:"Пижама с длинными рукавами",   brand:"Milana",category:"Пижамы",   pricePerItem:900, packSize:6,packPrice:5700},
-  {id:5,  name:"Пижама с воротником",          brand:"Milana",category:"Пижамы",   pricePerItem:950, packSize:6,packPrice:6000},
-  {id:6,  name:"Тройка (футб.+штаны+шорты)",  brand:"Milana",category:"Комплекты",pricePerItem:1050,packSize:6,packPrice:6600,badge:"Выгодно"},
-  {id:7,  name:"Лямки",                        brand:"Milana",category:"Прочее",   pricePerItem:550, packSize:5,packPrice:2900},
-  {id:8,  name:"Сорочки хлопок",               brand:"Milana",category:"Прочее",   pricePerItem:650, packSize:6,packPrice:4100},
-  {id:9,  name:"Туника базовая",               brand:"Milana",category:"Туники",   pricePerItem:650, packSize:6,packPrice:4100},
-  {id:10, name:"Туника удлинённая",            brand:"Milana",category:"Туники",   pricePerItem:850, packSize:6,packPrice:5400},
-  {id:11, name:"Бамбуковая пижама",            brand:"Milana",category:"Пижамы",   pricePerItem:650, packSize:6,packPrice:4100,badge:"Новинка"},
-  {id:12, name:"Бамбуковые сорочки",           brand:"Milana",category:"Прочее",   pricePerItem:550, packSize:6,packPrice:3500},
-  {id:13, name:"Бриджи",                       brand:"Milana",category:"Прочее",   pricePerItem:350, packSize:3,packPrice:1100},
-  {id:14, name:"Детская пижама",               brand:"Milana",category:"Детское",  pricePerItem:750, packSize:6,packPrice:4700}
+  {id:1,  name:"Майки и шорты",                brand:"Milana",category:"Комплекты",pricePerItem:650, packSize:6,packPrice:4100,badge:"Хит",     image:"assets/images/milana/placeholder.jpg"},
+  {id:2,  name:"Футболка и шорты",             brand:"Milana",category:"Комплекты",pricePerItem:650, packSize:6,packPrice:4100,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:3,  name:"Пижама с короткими рукавами",  brand:"Milana",category:"Пижамы",   pricePerItem:850, packSize:6,packPrice:5400,                   image:"assets/images/milana/pajama-hearts.jpg"},
+  {id:4,  name:"Пижама с длинными рукавами",   brand:"Milana",category:"Пижамы",   pricePerItem:900, packSize:6,packPrice:5700,                   image:"assets/images/milana/pajama-brown.jpg"},
+  {id:5,  name:"Пижама с воротником",          brand:"Milana",category:"Пижамы",   pricePerItem:950, packSize:6,packPrice:6000,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:6,  name:"Тройка (футб.+штаны+шорты)",  brand:"Milana",category:"Комплекты",pricePerItem:1050,packSize:6,packPrice:6600,badge:"Выгодно",   image:"assets/images/milana/placeholder.jpg"},
+  {id:7,  name:"Лямки",                        brand:"Milana",category:"Прочее",   pricePerItem:550, packSize:5,packPrice:2900,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:8,  name:"Сорочки хлопок",               brand:"Milana",category:"Сорочки",  pricePerItem:650, packSize:6,packPrice:4100,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:9,  name:"Туника базовая",               brand:"Milana",category:"Туники",   pricePerItem:650, packSize:6,packPrice:4100,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:10, name:"Туника удлинённая",            brand:"Milana",category:"Туники",   pricePerItem:850, packSize:6,packPrice:5400,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:11, name:"Бамбуковая пижама",            brand:"Milana",category:"Пижамы",   pricePerItem:650, packSize:6,packPrice:4100,badge:"Новинка",   image:"assets/images/milana/placeholder.jpg"},
+  {id:12, name:"Бамбуковые сорочки",           brand:"Milana",category:"Сорочки",  pricePerItem:550, packSize:6,packPrice:3500,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:13, name:"Бриджи",                       brand:"Milana",category:"Прочее",   pricePerItem:350, packSize:3,packPrice:1100,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:14, name:"Детская пижама",               brand:"Milana",category:"Детское",  pricePerItem:750, packSize:6,packPrice:4700,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:15, name:"Трусы хлопок Marabut (8551)",  brand:"Marabut",category:"Трусы",   pricePerItem:60,  packSize:20,packPrice:1300, badge:"Опт от 20 шт", minOrder:"от 20 шт",sizes:"4XL-6XL",   colors:"10 цветов", image:"assets/images/other/marabut-8551.jpg"},
+  {id:16, name:"Трусы рибана Marabut (8076)",  brand:"Marabut",category:"Трусы",   pricePerItem:70,  packSize:20,packPrice:1500,                   minOrder:"от 20 шт",sizes:"XXXL-5XL", colors:"12 цветов", image:"assets/images/other/marabut-8076.jpg"},
+  {id:17, name:"Трусы кружево Antiifu (1179)", brand:"Antiifu",category:"Трусы",   pricePerItem:100, packSize:20,packPrice:2100,                   minOrder:"от 20 шт",sizes:"3XL-5XL",  colors:"8 цветов",  image:"assets/images/other/antiifu-1179.jpg"},
+  {id:18, name:"Трусы хлопок Talas (737)",     brand:"Talas",  category:"Трусы",   pricePerItem:80,  packSize:20,packPrice:1700,                   minOrder:"от 20 шт",sizes:"XXXL-5XL", colors:"14 цветов", image:"assets/images/other/talas-737.jpg"},
+  {id:19, name:"Лифчик хлопок",                brand:"Другие бренды",category:"Лифчики",       pricePerItem:375, packSize:10,packPrice:3800, minOrder:"от 10 шт", image:"assets/images/other/bra.jpg"},
+  {id:20, name:"Комплект (лифчик + трусы)",    brand:"Другие бренды",category:"Комплекты белья",pricePerItem:460, packSize:10,packPrice:4800, minOrder:"от 10 шт", image:"assets/images/other/set.jpg"}
 ];
 
 // ─────────────────── CART ───────────────────
@@ -1165,12 +1176,19 @@ const CAT_GRADIENTS = {
   'Детское':   'linear-gradient(135deg,#F5E6D3,#E8C9A8)',
   'Прочее':    'linear-gradient(135deg,#E0D8D0,#C8BEB5)',
 };
+const UNDERWEAR_CATS = new Set(['Трусы','Лифчики','Комплекты белья']);
 function productCardHTML(p, stagger=0){
   const bg = CAT_GRADIENTS[p.category]||'linear-gradient(135deg,#E8D5C0,#D4B894)';
+  const imgContent = p.image
+    ? `<img src="${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" onerror="this.style.display='none'">`
+    : `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(139,94,74,0.35)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
+  const priceSub = UNDERWEAR_CATS.has(p.category) && p.minOrder
+    ? `${p.minOrder} | ${p.pricePerItem.toLocaleString('ru-RU')} ₽/шт`
+    : `${p.packSize} шт × ${p.pricePerItem.toLocaleString('ru-RU')} ₽`;
   return `<div class="product-card" style="transition-delay:${stagger}s">
     <div class="product-img" style="background:${bg}">
       ${p.badge?`<span class="product-badge">${p.badge}</span>`:''}
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(139,94,74,0.35)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      ${imgContent}
     </div>
     <div class="product-info">
       <div class="product-brand">${p.brand}</div>
@@ -1178,7 +1196,7 @@ function productCardHTML(p, stagger=0){
       <div class="product-price" data-tooltip="Цена за 1 шт: ${p.pricePerItem.toLocaleString('ru-RU')} ₽">
         ${p.packPrice.toLocaleString('ru-RU')} ₽ / уп.
       </div>
-      <div class="product-price-sub">${p.packSize} шт × ${p.pricePerItem.toLocaleString('ru-RU')} ₽</div>
+      <div class="product-price-sub">${priceSub}</div>
       <button class="btn-add" onclick="event.stopPropagation();addToCartBtn(${p.id},this)">В корзину</button>
     </div>
   </div>`;
@@ -1205,7 +1223,13 @@ function renderPreview(){
 // ─────────────────── RENDER CATALOG ───────────────────
 function renderCatalog(){
   let filtered = products;
-  if(filterBrand!=='all') filtered = filtered.filter(p=>p.brand.toLowerCase()===filterBrand);
+  if(filterBrand!=='all'){
+    if(filterBrand==='другие бренды'){
+      filtered = filtered.filter(p=>!['milana','marabut'].includes(p.brand.toLowerCase()));
+    } else {
+      filtered = filtered.filter(p=>p.brand.toLowerCase()===filterBrand);
+    }
+  }
   if(filterCat!=='all') filtered = filtered.filter(p=>p.category===filterCat);
   const grid = document.getElementById('catalog-grid');
   grid.innerHTML = filtered.length
