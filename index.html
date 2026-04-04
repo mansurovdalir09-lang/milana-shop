@@ -879,18 +879,18 @@ footer{
     <div class="catalog-filters" id="catalog-filters">
       <button class="filter-btn active" data-brand="all" onclick="setFilter('brand','all',this)">Все бренды</button>
       <button class="filter-btn" data-brand="milana" onclick="setFilter('brand','milana',this)">Milana</button>
-      <button class="filter-btn" data-brand="marabut" onclick="setFilter('brand','marabut',this)">Marabut</button>
-      <button class="filter-btn" data-brand="другие бренды" onclick="setFilter('brand','другие бренды',this)">Другие бренды</button>
+      <button class="filter-btn" data-brand="baror" onclick="setFilter('brand','baror',this)">Baror</button>
+      <button class="filter-btn" data-brand="fuoshi" onclick="setFilter('brand','fuoshi',this)">Fuoshi</button>
+      <button class="filter-btn" data-brand="другие" onclick="setFilter('brand','другие',this)">Другие</button>
       <div class="filter-sep"></div>
       <button class="filter-btn active" data-cat="all" onclick="setFilter('cat','all',this)">Все</button>
       <button class="filter-btn" data-cat="Пижамы" onclick="setFilter('cat','Пижамы',this)">Пижамы</button>
       <button class="filter-btn" data-cat="Комплекты" onclick="setFilter('cat','Комплекты',this)">Комплекты</button>
       <button class="filter-btn" data-cat="Туники" onclick="setFilter('cat','Туники',this)">Туники</button>
       <button class="filter-btn" data-cat="Сорочки" onclick="setFilter('cat','Сорочки',this)">Сорочки</button>
-      <button class="filter-btn" data-cat="Детское" onclick="setFilter('cat','Детское',this)">Детское</button>
-      <button class="filter-btn" data-cat="Трусы" onclick="setFilter('cat','Трусы',this)">Трусы</button>
       <button class="filter-btn" data-cat="Лифчики" onclick="setFilter('cat','Лифчики',this)">Лифчики</button>
-      <button class="filter-btn" data-cat="Комплекты белья" onclick="setFilter('cat','Комплекты белья',this)">Комплекты белья</button>
+      <button class="filter-btn" data-cat="Трусы" onclick="setFilter('cat','Трусы',this)">Трусы</button>
+      <button class="filter-btn" data-cat="Детское" onclick="setFilter('cat','Детское',this)">Детское</button>
     </div>
   </div>
   <div class="catalog-grid" id="catalog-grid"></div>
@@ -1040,12 +1040,16 @@ const products = [
   {id:12, name:"Бамбуковые сорочки",           brand:"Milana",category:"Сорочки",  pricePerItem:550, packSize:6,packPrice:3500,                   image:"assets/images/milana/placeholder.jpg"},
   {id:13, name:"Бриджи",                       brand:"Milana",category:"Прочее",   pricePerItem:350, packSize:3,packPrice:1100,                   image:"assets/images/milana/placeholder.jpg"},
   {id:14, name:"Детская пижама",               brand:"Milana",category:"Детское",  pricePerItem:750, packSize:6,packPrice:4700,                   image:"assets/images/milana/placeholder.jpg"},
-  {id:15, name:"Трусы хлопок Marabut (8551)",  brand:"Marabut",category:"Трусы",   pricePerItem:60,  packSize:20,packPrice:1300, badge:"Опт от 20 шт", minOrder:"от 20 шт",sizes:"4XL-6XL",   colors:"10 цветов", image:"assets/images/other/marabut-8551.jpg"},
-  {id:16, name:"Трусы рибана Marabut (8076)",  brand:"Marabut",category:"Трусы",   pricePerItem:70,  packSize:20,packPrice:1500,                   minOrder:"от 20 шт",sizes:"XXXL-5XL", colors:"12 цветов", image:"assets/images/other/marabut-8076.jpg"},
-  {id:17, name:"Трусы кружево Antiifu (1179)", brand:"Antiifu",category:"Трусы",   pricePerItem:100, packSize:20,packPrice:2100,                   minOrder:"от 20 шт",sizes:"3XL-5XL",  colors:"8 цветов",  image:"assets/images/other/antiifu-1179.jpg"},
-  {id:18, name:"Трусы хлопок Talas (737)",     brand:"Talas",  category:"Трусы",   pricePerItem:80,  packSize:20,packPrice:1700,                   minOrder:"от 20 шт",sizes:"XXXL-5XL", colors:"14 цветов", image:"assets/images/other/talas-737.jpg"},
-  {id:19, name:"Лифчик хлопок",                brand:"Другие бренды",category:"Лифчики",       pricePerItem:375, packSize:10,packPrice:3800, minOrder:"от 10 шт", image:"assets/images/other/bra.jpg"},
-  {id:20, name:"Комплект (лифчик + трусы)",    brand:"Другие бренды",category:"Комплекты белья",pricePerItem:460, packSize:10,packPrice:4800, minOrder:"от 10 шт", image:"assets/images/other/set.jpg"}
+  {id:15, name:"Туника цветочная Baror (366)",        brand:"Baror",   category:"Туники",   pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/baror/baror-366.jpg",        sizes:"50-60",          badge:"Новинка"},
+  {id:16, name:"Туника полоска Baror (1299)",          brand:"Baror",   category:"Туники",   pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/baror/baror-1299.jpg",       sizes:"48-58"},
+  {id:17, name:"Комплект туника+бриджи Baror (698)",   brand:"Baror",   category:"Комплекты",pricePerItem:700, packSize:6, packPrice:4400, image:"assets/images/baror/baror-698.jpg",        sizes:"48-58"},
+  {id:18, name:"Сорочка хлопок (7003)",                brand:"Другие",  category:"Сорочки",  pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/other/sorochka-7003.jpg",    sizes:"50-62"},
+  {id:19, name:"Халат+сорочка комплект (2701)",        brand:"Другие",  category:"Сорочки",  pricePerItem:900, packSize:6, packPrice:5700, image:"assets/images/other/komplekt-2701.jpg",    sizes:"48-60",          badge:"Комплект"},
+  {id:20, name:"Лифчик кружевной Fuoshi (7970C)",      brand:"Fuoshi",  category:"Лифчики",  pricePerItem:375, packSize:6, packPrice:2400, image:"assets/images/fuoshi/fuoshi-7970c.jpg",    sizes:"38/85C-42/95C",  minOrder:"от 6 шт"},
+  {id:21, name:"Лифчик пуш-ап Fuoshi (9423B)",         brand:"Fuoshi",  category:"Лифчики",  pricePerItem:375, packSize:6, packPrice:2400, image:"assets/images/fuoshi/fuoshi-9423b.jpg",    sizes:"36/80B-40/90B",  minOrder:"от 6 шт"},
+  {id:22, name:"Лифчик леопард Jiemina (7883-B)",      brand:"Jiemina", category:"Лифчики",  pricePerItem:375, packSize:6, packPrice:2400, image:"assets/images/fuoshi/jiemina-7883b.jpg",   sizes:"34/75B-38/85B",  minOrder:"от 6 шт"},
+  {id:23, name:"Лифчик без косточек Gather (J002)",    brand:"Gather",  category:"Лифчики",  pricePerItem:350, packSize:6, packPrice:2200, image:"assets/images/fuoshi/gather-j002.jpg",     sizes:"XL-4XL",         minOrder:"от 6 шт"},
+  {id:24, name:"Лифчик спортивный 615",                brand:"Другие",  category:"Лифчики",  pricePerItem:350, packSize:6, packPrice:2200, image:"assets/images/fuoshi/sport-615.jpg",       sizes:"2XL-3XL",        minOrder:"от 6 шт"}
 ];
 
 // ─────────────────── CART ───────────────────
@@ -1224,8 +1228,8 @@ function renderPreview(){
 function renderCatalog(){
   let filtered = products;
   if(filterBrand!=='all'){
-    if(filterBrand==='другие бренды'){
-      filtered = filtered.filter(p=>!['milana','marabut'].includes(p.brand.toLowerCase()));
+    if(filterBrand==='другие'){
+      filtered = filtered.filter(p=>!['milana','baror','fuoshi'].includes(p.brand.toLowerCase()));
     } else {
       filtered = filtered.filter(p=>p.brand.toLowerCase()===filterBrand);
     }
