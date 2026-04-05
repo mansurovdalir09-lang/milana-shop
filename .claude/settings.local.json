@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p assets/images/milana)",
+      "Bash(mkdir -p assets/images/baror)",
+      "Bash(mkdir -p assets/images/fuoshi)",
+      "Bash(mkdir -p assets/images/other)",
+      "Bash(mv baror-366.jpg.png baror-366.png)",
+      "Bash(mv baror-1299.jpg.png baror-1299.png)",
+      "Bash(mv baror-698.jpg.png baror-698.png)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
