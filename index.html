@@ -202,6 +202,15 @@ nav a:hover::after,nav a.active::after{right:0;}
   flex-direction:column;gap:8px;color:var(--beige);font-size:13px;
 }
 .hero-img-placeholder svg{opacity:0.5;}
+.hero-slider{position:relative;width:80%;height:80%;border-radius:50%;overflow:hidden;}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 0.8s ease;}
+.hero-slide.active{opacity:1;}
+.hero-slide img{width:100%;height:100%;object-fit:cover;display:block;}
+.hero-slide-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--beige);font-size:13px;background:rgba(196,149,106,0.1);border:2px dashed rgba(196,149,106,0.3);border-radius:50%;}
+.hero-slide-fallback svg{opacity:0.5;}
+.hero-dots{position:absolute;bottom:-32px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;}
+.hero-dot{width:8px;height:8px;border-radius:50%;background:var(--beige-light);border:none;cursor:pointer;padding:0;transition:background 0.3s,transform 0.3s;}
+.hero-dot.active{background:var(--beige);transform:scale(1.3);}
 .float-circle{
   position:absolute;border-radius:50%;background:var(--beige-light);
   animation:floatCircle 6s ease-in-out infinite;
@@ -633,7 +642,10 @@ footer{
   nav{display:none;}
   .burger{display:flex;}
   .hero{padding:100px 24px 60px;}
-  .hero-visual{display:none;}
+  .hero-visual{position:relative;right:auto;top:auto;transform:none;width:100%;height:280px;margin-top:32px;border-radius:16px;}
+  .hero-slider{width:100%;height:100%;border-radius:16px;}
+  .hero-slide-fallback{border-radius:16px;}
+  .hero-circle-bg,.float-circle{display:none;}
   section{padding:60px 24px;}
   .why-grid{grid-template-columns:1fr;}
   .products-grid{grid-template-columns:repeat(2,1fr);gap:16px;}
@@ -736,9 +748,29 @@ footer{
       <div class="float-circle"></div>
       <div class="float-circle"></div>
       <div class="float-circle"></div>
-      <div class="hero-img-placeholder">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <span>Фото товара</span>
+      <div class="hero-slider" id="hero-slider">
+        <div class="hero-slide active">
+          <img src="assets/images/hero-1.jpg" alt="Milana" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="hero-slide-fallback" style="display:none"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Фото товара</span></div>
+        </div>
+        <div class="hero-slide">
+          <img src="assets/images/hero-2.jpg" alt="Milana" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="hero-slide-fallback" style="display:none"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Фото товара</span></div>
+        </div>
+        <div class="hero-slide">
+          <img src="assets/images/hero-3.jpg" alt="Milana" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="hero-slide-fallback" style="display:none"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Фото товара</span></div>
+        </div>
+        <div class="hero-slide">
+          <img src="assets/images/hero-4.jpg" alt="Milana" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="hero-slide-fallback" style="display:none"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Фото товара</span></div>
+        </div>
+        <div class="hero-dots">
+          <button class="hero-dot active" aria-label="Слайд 1"></button>
+          <button class="hero-dot" aria-label="Слайд 2"></button>
+          <button class="hero-dot" aria-label="Слайд 3"></button>
+          <button class="hero-dot" aria-label="Слайд 4"></button>
+        </div>
       </div>
     </div>
   </section>
@@ -1173,6 +1205,7 @@ window.addEventListener('load',()=>{
   renderPreview();
   initScroll();
   initParallax();
+  initHeroSlider();
 });
 
 // ─────────────────── HERO ANIMATION ───────────────────
@@ -1218,6 +1251,33 @@ function initParallax(){
       hero.style.backgroundPosition = `center ${y*0.4}px`;
     }
   });
+}
+
+// ─────────────────── HERO SLIDER ───────────────────
+function initHeroSlider(){
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-dot');
+  if(!slides.length) return;
+  let current = 0;
+  let timer;
+  function goTo(idx){
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (idx + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+  function start(){
+    timer = setInterval(()=>goTo(current+1), 3000);
+  }
+  dots.forEach((dot,i)=>{
+    dot.addEventListener('click',()=>{
+      clearInterval(timer);
+      goTo(i);
+      start();
+    });
+  });
+  start();
 }
 
 // ─────────────────── PRODUCT CARD HTML ───────────────────
