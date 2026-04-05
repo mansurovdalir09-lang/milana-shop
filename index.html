@@ -899,6 +899,7 @@ footer{
       <button class="filter-btn" data-cat="Лифчики" onclick="setFilter('cat','Лифчики',this)">Лифчики</button>
       <button class="filter-btn" data-cat="Трусы" onclick="setFilter('cat','Трусы',this)">Трусы</button>
       <button class="filter-btn" data-cat="Детское" onclick="setFilter('cat','Детское',this)">Детское</button>
+      <button class="filter-btn" data-cat="Халаты" onclick="setFilter('cat','Халаты',this)">Халаты</button>
     </div>
   </div>
   <div class="catalog-grid" id="catalog-grid"></div>
@@ -1057,7 +1058,26 @@ const products = [
   {id:21, name:"Лифчик пуш-ап Fuoshi (9423B)",         brand:"Fuoshi",  category:"Лифчики",  pricePerItem:375, packSize:6, packPrice:2400, image:"assets/images/fuoshi/fuoshi-9423b.png",    sizes:"36/80B-40/90B",  minOrder:"от 6 шт"},
   {id:22, name:"Лифчик леопард Jiemina (7883-B)",      brand:"Jiemina", category:"Лифчики",  pricePerItem:375, packSize:6, packPrice:2400, image:"assets/images/fuoshi/jiemina-7883b.png",   sizes:"34/75B-38/85B",  minOrder:"от 6 шт"},
   {id:23, name:"Лифчик без косточек Gather (J002)",    brand:"Gather",  category:"Лифчики",  pricePerItem:350, packSize:6, packPrice:2200, image:"assets/images/fuoshi/gather-j002.png",     sizes:"XL-4XL",         minOrder:"от 6 шт"},
-  {id:24, name:"Лифчик спортивный 615",                brand:"Другие",  category:"Лифчики",  pricePerItem:350, packSize:6, packPrice:2200, image:"assets/images/fuoshi/sport-615.png",       sizes:"2XL-3XL",        minOrder:"от 6 шт"}
+  {id:24, name:"Лифчик спортивный 615",                brand:"Другие",  category:"Лифчики",  pricePerItem:350, packSize:6, packPrice:2200, image:"assets/images/fuoshi/sport-615.png",       sizes:"2XL-3XL",        minOrder:"от 6 шт"},
+  {id:25, name:"Сорочка зелёная ромашки",             brand:"Другие",  category:"Сорочки",  pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/sorochka-green-daisy.jpg",       sizes:"48-58"},
+  {id:26, name:"Сорочка серая геометрия",             brand:"Другие",  category:"Сорочки",  pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/sorochka-grey-geo.jpg",          sizes:"48-58"},
+  {id:27, name:"Сорочка синяя ананасы",               brand:"Другие",  category:"Сорочки",  pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/sorochka-blue-pineapple.jpg",    sizes:"48-58"},
+  {id:28, name:"Сорочка синяя листья",                brand:"Другие",  category:"Сорочки",  pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/sorochka-blue-leaves.jpg",       sizes:"48-58"},
+  {id:29, name:"Сорочка синяя цветы длинная",         brand:"Другие",  category:"Сорочки",  pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/sorochka-blue-flowers-long.jpg", sizes:"48-58"},
+  {id:30, name:"Сорочка синяя цветы короткая",        brand:"Другие",  category:"Сорочки",  pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/sorochka-blue-flowers-short.jpg",sizes:"48-58"},
+  {id:31, name:"Сорочка горошек короткая",            brand:"Другие",  category:"Сорочки",  pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/sorochka-dots-short.jpg",        sizes:"48-58"},
+  {id:32, name:"Сорочка горошек длинная",             brand:"Другие",  category:"Сорочки",  pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/sorochka-dots-long.jpg",         sizes:"48-58"},
+  {id:33, name:"Халат Baror 368 чёрный цветы",        brand:"Baror",   category:"Халаты",   pricePerItem:500, packSize:6, packPrice:3200, image:"assets/images/baror-368.jpg",                  sizes:"50-66"},
+  {id:34, name:"Халат Baror 1320 серый",              brand:"Baror",   category:"Халаты",   pricePerItem:550, packSize:6, packPrice:3500, image:"assets/images/baror-1320.jpg",                 sizes:"50-66"},
+  {id:35, name:"Сорочка Пифагор 2208",                brand:"Другие",  category:"Сорочки",  pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/pifogor-2208.jpg",               sizes:"48-58"},
+  {id:36, name:"Туника Baror 1299 полоска",           brand:"Baror",   category:"Туники",   pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/baror-1299-v2.jpg",              sizes:"48-58"},
+  {id:37, name:"Халат Baror 1313 зелёный",            brand:"Baror",   category:"Халаты",   pricePerItem:500, packSize:6, packPrice:3200, image:"assets/images/baror-1313.jpg",                 sizes:"50-66"},
+  {id:38, name:"Туника Baror 2204 бирюза",            brand:"Baror",   category:"Туники",   pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/baror-2204.jpg",                 sizes:"48-58"},
+  {id:39, name:"Сорочка Baror 2208 стрекоза",         brand:"Baror",   category:"Сорочки",  pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/baror-2208.jpg",                 sizes:"48-58"},
+  {id:40, name:"Пижама Baror 1622 персик",            brand:"Baror",   category:"Пижамы",   pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/baror-1622.jpg",                 sizes:"50-60"},
+  {id:41, name:"Пижама Baror 687 красная",            brand:"Baror",   category:"Пижамы",   pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/baror-687.jpg",                  sizes:"48-56"},
+  {id:42, name:"Халат Baror 352 тёмный",              brand:"Baror",   category:"Халаты",   pricePerItem:500, packSize:6, packPrice:3200, image:"assets/images/baror-352.jpg",                  sizes:"50-66"},
+  {id:43, name:"Халат Baror 561 тропик",              brand:"Baror",   category:"Халаты",   pricePerItem:500, packSize:6, packPrice:3200, image:"assets/images/baror-561.jpg",                  sizes:"44-54"}
 ];
 
 // ─────────────────── CART ───────────────────
