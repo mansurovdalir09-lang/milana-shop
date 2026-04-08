@@ -424,6 +424,9 @@ footer{
   background:var(--green);color:white;border-color:var(--green);
 }
 .filter-sep{width:1px;height:32px;background:var(--border);align-self:center;}
+.view-toggle{display:flex;gap:10px;margin:16px 0;}
+.view-btn{padding:8px 20px;border-radius:20px;border:1px solid var(--beige);background:transparent;cursor:pointer;font-size:14px;transition:all 0.3s;}
+.view-btn.active{background:var(--beige);color:var(--dark);}
 .catalog-grid{
   display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
   padding:0 60px 80px;
@@ -924,6 +927,10 @@ footer{
       <button class="filter-btn" data-cat="Трусы" onclick="setFilter('cat','Трусы',this)">Трусы</button>
       <button class="filter-btn" data-cat="Детское" onclick="setFilter('cat','Детское',this)">Детское</button>
       <button class="filter-btn" data-cat="Халаты" onclick="setFilter('cat','Халаты',this)">Халаты</button>
+    </div>
+    <div class="view-toggle">
+      <button class="view-btn active" id="btn-model" onclick="setView('model')">👗 С моделью</button>
+      <button class="view-btn" id="btn-flat" onclick="setView('flat')">📦 Фото товара</button>
     </div>
   </div>
   <div class="catalog-grid" id="catalog-grid"></div>
@@ -1598,6 +1605,31 @@ document.addEventListener('click',e=>{
   btn.classList.add('ripple');
   setTimeout(()=>btn.classList.remove('ripple'),700);
 });
+
+// ─────────────────── VIEW TOGGLE ───────────────────
+let currentView = 'model';
+
+function setView(view) {
+  currentView = view;
+  document.getElementById('btn-model').classList.toggle('active', view === 'model');
+  document.getElementById('btn-flat').classList.toggle('active', view === 'flat');
+
+  document.querySelectorAll('.product-card img').forEach(img => {
+    const src = img.getAttribute('src') || img.getAttribute('data-src');
+    if (!src || !src.includes('milana')) return;
+
+    if (view === 'flat') {
+      img.setAttribute('data-model-src', src);
+      const filename = src.split('/').pop();
+      const flatSrc = src.replace(filename, 'flat-' + filename);
+      img.src = flatSrc;
+    } else {
+      const modelSrc = img.getAttribute('data-model-src');
+      if (modelSrc) img.src = modelSrc;
+    }
+  });
+}
+
 </script>
 </body>
 </html>
