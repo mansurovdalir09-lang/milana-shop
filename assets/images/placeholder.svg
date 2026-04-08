@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500">
+  <defs>
+    <style>
+      .bg { fill: #C4956A; }
+      .text { font-family: 'Cormorant Garamond', serif; font-size: 36px; fill: #FAFAF8; text-anchor: middle; }
+    </style>
+  </defs>
+  <rect class="bg" width="400" height="500"/>
+  <text class="text" x="200" y="250" dominant-baseline="middle">Фото скоро</text>
+</svg>

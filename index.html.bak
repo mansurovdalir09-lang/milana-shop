@@ -424,9 +424,6 @@ footer{
   background:var(--green);color:white;border-color:var(--green);
 }
 .filter-sep{width:1px;height:32px;background:var(--border);align-self:center;}
-.view-toggle{display:flex;gap:10px;margin:16px 0;}
-.view-btn{padding:8px 20px;border-radius:20px;border:1px solid var(--beige);background:transparent;cursor:pointer;font-size:14px;transition:all 0.3s;}
-.view-btn.active{background:var(--beige);color:var(--dark);}
 .catalog-grid{
   display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
   padding:0 60px 80px;
@@ -928,10 +925,6 @@ footer{
       <button class="filter-btn" data-cat="Детское" onclick="setFilter('cat','Детское',this)">Детское</button>
       <button class="filter-btn" data-cat="Халаты" onclick="setFilter('cat','Халаты',this)">Халаты</button>
     </div>
-    <div class="view-toggle">
-      <button class="view-btn active" id="btn-model" onclick="setView('model')">👗 С моделью</button>
-      <button class="view-btn" id="btn-flat" onclick="setView('flat')">📦 Фото товара</button>
-    </div>
   </div>
   <div class="catalog-grid" id="catalog-grid"></div>
 
@@ -1065,20 +1058,20 @@ footer{
 <script>
 // ─────────────────── DATA ───────────────────
 const products = [
-  {id:1,  name:"Майки и шорты",                brand:"Milana",category:"Комплекты",pricePerItem:650, packSize:6,packPrice:4100,badge:"Хит",     image:"assets/images/placeholder.jpg"},
-  {id:2,  name:"Футболка и шорты",             brand:"Milana",category:"Комплекты",pricePerItem:650, packSize:6,packPrice:4100,                   image:"assets/images/placeholder.jpg"},
+  {id:1,  name:"Майки и шорты",                brand:"Milana",category:"Комплекты",pricePerItem:650, packSize:6,packPrice:4100,badge:"Хит",     image:"assets/images/milana/placeholder.jpg"},
+  {id:2,  name:"Футболка и шорты",             brand:"Milana",category:"Комплекты",pricePerItem:650, packSize:6,packPrice:4100,                   image:"assets/images/milana/placeholder.jpg"},
   {id:3,  name:"Пижама с короткими рукавами",  brand:"Milana",category:"Пижамы",   pricePerItem:850, packSize:6,packPrice:5400,                   image:"assets/images/milana/pajama-hearts.jpg"},
   {id:4,  name:"Пижама с длинными рукавами",   brand:"Milana",category:"Пижамы",   pricePerItem:900, packSize:6,packPrice:5700,                   image:"assets/images/milana/pajama-brown.jpg"},
-  {id:5,  name:"Пижама с воротником",          brand:"Milana",category:"Пижамы",   pricePerItem:950, packSize:6,packPrice:6000,                   image:"assets/images/placeholder.jpg"},
-  {id:6,  name:"Тройка (футб.+штаны+шорты)",  brand:"Milana",category:"Комплекты",pricePerItem:1050,packSize:6,packPrice:6600,badge:"Выгодно",   image:"assets/images/placeholder.jpg"},
-  {id:7,  name:"Лямки",                        brand:"Milana",category:"Прочее",   pricePerItem:550, packSize:5,packPrice:2900,                   image:"assets/images/placeholder.jpg"},
-  {id:8,  name:"Сорочки хлопок",               brand:"Milana",category:"Сорочки",  pricePerItem:650, packSize:6,packPrice:4100,                   image:"assets/images/placeholder.jpg"},
-  {id:9,  name:"Туника базовая",               brand:"Milana",category:"Туники",   pricePerItem:650, packSize:6,packPrice:4100,                   image:"assets/images/placeholder.jpg"},
-  {id:10, name:"Туника удлинённая",            brand:"Milana",category:"Туники",   pricePerItem:850, packSize:6,packPrice:5400,                   image:"assets/images/placeholder.jpg"},
-  {id:11, name:"Бамбуковая пижама",            brand:"Milana",category:"Пижамы",   pricePerItem:650, packSize:6,packPrice:4100,badge:"Новинка",   image:"assets/images/placeholder.jpg"},
-  {id:12, name:"Бамбуковые сорочки",           brand:"Milana",category:"Сорочки",  pricePerItem:550, packSize:6,packPrice:3500,                   image:"assets/images/placeholder.jpg"},
-  {id:13, name:"Бриджи",                       brand:"Milana",category:"Прочее",   pricePerItem:350, packSize:3,packPrice:1100,                   image:"assets/images/placeholder.jpg"},
-  {id:14, name:"Детская пижама",               brand:"Milana",category:"Детское",  pricePerItem:750, packSize:6,packPrice:4700,                   image:"assets/images/placeholder.jpg"},
+  {id:5,  name:"Пижама с воротником",          brand:"Milana",category:"Пижамы",   pricePerItem:950, packSize:6,packPrice:6000,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:6,  name:"Тройка (футб.+штаны+шорты)",  brand:"Milana",category:"Комплекты",pricePerItem:1050,packSize:6,packPrice:6600,badge:"Выгодно",   image:"assets/images/milana/placeholder.jpg"},
+  {id:7,  name:"Лямки",                        brand:"Milana",category:"Прочее",   pricePerItem:550, packSize:5,packPrice:2900,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:8,  name:"Сорочки хлопок",               brand:"Milana",category:"Сорочки",  pricePerItem:650, packSize:6,packPrice:4100,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:9,  name:"Туника базовая",               brand:"Milana",category:"Туники",   pricePerItem:650, packSize:6,packPrice:4100,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:10, name:"Туника удлинённая",            brand:"Milana",category:"Туники",   pricePerItem:850, packSize:6,packPrice:5400,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:11, name:"Бамбуковая пижама",            brand:"Milana",category:"Пижамы",   pricePerItem:650, packSize:6,packPrice:4100,badge:"Новинка",   image:"assets/images/milana/placeholder.jpg"},
+  {id:12, name:"Бамбуковые сорочки",           brand:"Milana",category:"Сорочки",  pricePerItem:550, packSize:6,packPrice:3500,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:13, name:"Бриджи",                       brand:"Milana",category:"Прочее",   pricePerItem:350, packSize:3,packPrice:1100,                   image:"assets/images/milana/placeholder.jpg"},
+  {id:14, name:"Детская пижама",               brand:"Milana",category:"Детское",  pricePerItem:750, packSize:6,packPrice:4700,                   image:"assets/images/milana/placeholder.jpg"},
   {id:15, name:"Туника цветочная Baror (366)",        brand:"Baror",   category:"Туники",   pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/baror/baror-366.png",        sizes:"50-60",          badge:"Новинка"},
   {id:16, name:"Туника полоска Baror (1299)",          brand:"Baror",   category:"Туники",   pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/baror/baror-1299.png",       sizes:"48-58"},
   {id:17, name:"Комплект туника+бриджи Baror (698)",   brand:"Baror",   category:"Комплекты",pricePerItem:700, packSize:6, packPrice:4400, image:"assets/images/baror/baror-698.png",        sizes:"48-58"},
@@ -1126,69 +1119,69 @@ const products = [
   {id:59, name:"Халат Baror 366 терракотовый цветы",  brand:"Baror",   category:"Халаты",   pricePerItem:500, packSize:6, packPrice:3200, image:"assets/images/baror-366-v2.jpg",               sizes:"50-60"},
   {id:60, name:"Туника Baror 3202 разноцветная буквы",brand:"Baror",   category:"Туники",   pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/baror-3202.jpg",                 sizes:"48-70"},
   {id:61, name:"Туника Baror 2281 чёрная буквы",      brand:"Baror",   category:"Туники",   pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/baror-2281.jpg",                 sizes:"48-58"},
-  {id:62, name:"Комплект футболка и шорты с горошком", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-1.jpg"},
-  {id:63, name:"Комплект футболка и шорты с цветами", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-2.jpg"},
-  {id:64, name:"Комплект футболка и шорты в полоску", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-3.jpg"},
-  {id:65, name:"Комплект футболка и шорты с клеткой", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-4.jpg"},
-  {id:66, name:"Комплект футболка и шорты с сердечками", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-5.jpg"},
-  {id:67, name:"Комплект футболка и шорты с листьями", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-6.jpg"},
-  {id:68, name:"Комплект футболка и шорты однотонный", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-7.jpg"},
-  {id:69, name:"Комплект футболка и шорты с бабочками", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-8.jpg"},
-  {id:70, name:"Комплект футболка и шорты с геометрией", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-9.jpg"},
-  {id:71, name:"Комплект футболка и бриджи с фруктами", brand:"Milana", category:"Пижамы", pricePerItem:750, packSize:6, packPrice:4500, image:"assets/images/milana/pajama-10.jpg"},
-  {id:72, name:"Комплект футболка и бриджи с звездами", brand:"Milana", category:"Пижамы", pricePerItem:750, packSize:6, packPrice:4500, image:"assets/images/milana/pajama-11.jpg"},
-  {id:73, name:"Комплект футболка и бриджи однотонный", brand:"Milana", category:"Пижамы", pricePerItem:750, packSize:6, packPrice:4500, image:"assets/images/milana/pajama-12.jpg"},
-  {id:74, name:"Комплект футболка и бриджи с розами", brand:"Milana", category:"Пижамы", pricePerItem:750, packSize:6, packPrice:4500, image:"assets/images/milana/pajama-13.jpg"},
-  {id:75, name:"Комплект футболка и бриджи в полоску", brand:"Milana", category:"Пижамы", pricePerItem:750, packSize:6, packPrice:4500, image:"assets/images/milana/pajama-14.jpg"},
-  {id:76, name:"Комплект футболка и бриджи с геометрией", brand:"Milana", category:"Пижамы", pricePerItem:750, packSize:6, packPrice:4500, image:"assets/images/milana/pajama-15.jpg"},
-  {id:77, name:"Комплект футболка и бриджи с клеткой", brand:"Milana", category:"Пижамы", pricePerItem:750, packSize:6, packPrice:4500, image:"assets/images/milana/pajama-16.jpg"},
-  {id:78, name:"Комплект футболка и бриджи с цветами", brand:"Milana", category:"Пижамы", pricePerItem:750, packSize:6, packPrice:4500, image:"assets/images/milana/pajama-17.jpg"},
-  {id:79, name:"Комплект футболка и бриджи с горошком", brand:"Milana", category:"Пижамы", pricePerItem:750, packSize:6, packPrice:4500, image:"assets/images/milana/pajama-18.jpg"},
-  {id:80, name:"Пижама с длинными штанами и цветами", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-19.jpg"},
-  {id:81, name:"Пижама с длинными штанами в полоску", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-20.jpg"},
-  {id:82, name:"Пижама с длинными штанами с клеткой", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-21.jpg"},
-  {id:83, name:"Пижама с длинными штанами с розами", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-22.jpg"},
-  {id:84, name:"Пижама с длинными штанами однотонная", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-23.jpg"},
-  {id:85, name:"Пижама с длинными штанами с геометрией", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-24.jpg"},
-  {id:86, name:"Пижама с длинными штанами с листьями", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-25.jpg"},
-  {id:87, name:"Пижама с длинными штанами с животными", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-26.jpg"},
-  {id:88, name:"Пижама с длинными штанами с абстракцией", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-27.jpg"},
-  {id:89, name:"Сорочка ночная с цветочным принтом", brand:"Milana", category:"Пижамы", pricePerItem:550, packSize:6, packPrice:3500, image:"assets/images/milana/pajama-28.jpg"},
-  {id:90, name:"Сорочка ночная в полоску", brand:"Milana", category:"Пижамы", pricePerItem:550, packSize:6, packPrice:3500, image:"assets/images/milana/pajama-29.jpg"},
-  {id:91, name:"Сорочка ночная с горошком", brand:"Milana", category:"Пижамы", pricePerItem:550, packSize:6, packPrice:3500, image:"assets/images/milana/pajama-30.jpg"},
-  {id:92, name:"Сорочка ночная с клеткой", brand:"Milana", category:"Пижамы", pricePerItem:550, packSize:6, packPrice:3500, image:"assets/images/milana/pajama-31.jpg"},
-  {id:93, name:"Сорочка ночная однотонная", brand:"Milana", category:"Пижамы", pricePerItem:550, packSize:6, packPrice:3500, image:"assets/images/milana/pajama-32.jpg"},
-  {id:94, name:"Сорочка ночная с геометрией", brand:"Milana", category:"Пижамы", pricePerItem:550, packSize:6, packPrice:3500, image:"assets/images/milana/pajama-33.jpg"},
-  {id:95, name:"Сорочка ночная с листьями", brand:"Milana", category:"Пижамы", pricePerItem:550, packSize:6, packPrice:3500, image:"assets/images/milana/pajama-34.jpg"},
-  {id:96, name:"Сорочка ночная с розами", brand:"Milana", category:"Пижамы", pricePerItem:550, packSize:6, packPrice:3500, image:"assets/images/milana/pajama-35.jpg"},
-  {id:97, name:"Сорочка ночная с животными", brand:"Milana", category:"Пижамы", pricePerItem:550, packSize:6, packPrice:3500, image:"assets/images/milana/pajama-36.jpg"},
-  {id:98, name:"Пижама с воротником и шортами, горошек", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-37.jpg"},
-  {id:99, name:"Пижама с воротником и шортами, цветы", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-38.jpg"},
-  {id:100, name:"Пижама с воротником и шортами, полоска", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-39.jpg"},
-  {id:101, name:"Пижама с воротником и шортами, клетка", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-40.jpg"},
-  {id:102, name:"Пижама с воротником и шортами, геометрия", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-41.jpg"},
-  {id:103, name:"Пижама с воротником и шортами, листья", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-42.jpg"},
-  {id:104, name:"Пижама с воротником и шортами, животные", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-43.jpg"},
-  {id:105, name:"Пижама с воротником и шортами, розы", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-44.jpg"},
-  {id:106, name:"Пижама с воротником и шортами, абстракция", brand:"Milana", category:"Пижамы", pricePerItem:850, packSize:6, packPrice:5400, image:"assets/images/milana/pajama-45.jpg"},
-  {id:107, name:"Пижама с воротником, горошек", brand:"Milana", category:"Пижамы", pricePerItem:900, packSize:6, packPrice:5700, image:"assets/images/milana/pajama-46.jpg"},
-  {id:108, name:"Пижама с воротником, цветы", brand:"Milana", category:"Пижамы", pricePerItem:900, packSize:6, packPrice:5700, image:"assets/images/milana/pajama-47.jpg"},
-  {id:109, name:"Пижама с воротником, полоска", brand:"Milana", category:"Пижамы", pricePerItem:900, packSize:6, packPrice:5700, image:"assets/images/milana/pajama-48.jpg"},
-  {id:110, name:"Пижама с воротником, клетка", brand:"Milana", category:"Пижамы", pricePerItem:900, packSize:6, packPrice:5700, image:"assets/images/milana/pajama-49.jpg"},
-  {id:111, name:"Пижама с воротником, геометрия", brand:"Milana", category:"Пижамы", pricePerItem:900, packSize:6, packPrice:5700, image:"assets/images/milana/pajama-50.jpg"},
-  {id:112, name:"Пижама с воротником, листья", brand:"Milana", category:"Пижамы", pricePerItem:900, packSize:6, packPrice:5700, image:"assets/images/milana/pajama-51.jpg"},
-  {id:113, name:"Пижама с воротником, животные", brand:"Milana", category:"Пижамы", pricePerItem:900, packSize:6, packPrice:5700, image:"assets/images/milana/pajama-52.jpg"},
-  {id:114, name:"Пижама с воротником, розы", brand:"Milana", category:"Пижамы", pricePerItem:900, packSize:6, packPrice:5700, image:"assets/images/milana/pajama-53.jpg"},
-  {id:115, name:"Пижама с воротником, абстракция", brand:"Milana", category:"Пижамы", pricePerItem:900, packSize:6, packPrice:5700, image:"assets/images/milana/pajama-54.jpg"},
-  {id:116, name:"Туника хлопок с цветами", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-55.jpg"},
-  {id:117, name:"Туника хлопок, полоска", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-56.jpg"},
-  {id:118, name:"Туника хлопок, горошек", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-57.jpg"},
-  {id:119, name:"Туника хлопок, клетка", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-58.jpg"},
-  {id:120, name:"Туника хлопок, геометрия", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-59.jpg"},
-  {id:121, name:"Туника хлопок, листья", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-60.jpg"},
-  {id:122, name:"Туника хлопок, животные", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-61.jpg"},
-  {id:123, name:"Туника хлопок, розы", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-62.jpg"},
-  {id:124, name:"Туника хлопок, абстракция", brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-63.jpg"}
+  {id:62, name:"Пижама Milana №1",    brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-1.jpg"},
+  {id:63, name:"Пижама Milana №2",    brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-2.jpg"},
+  {id:64, name:"Пижама Milana №3",    brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-3.jpg"},
+  {id:65, name:"Пижама Milana №4",    brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-4.jpg"},
+  {id:66, name:"Пижама Milana №5",    brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-5.jpg"},
+  {id:67, name:"Пижама Milana №6",    brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-6.jpg"},
+  {id:68, name:"Пижама Milana №7",    brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-7.jpg"},
+  {id:69, name:"Пижама Milana №8",    brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-8.jpg"},
+  {id:70, name:"Пижама Milana №9",    brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-9.jpg"},
+  {id:71, name:"Пижама Milana №10",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-10.jpg"},
+  {id:72, name:"Пижама Milana №11",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-11.jpg"},
+  {id:73, name:"Пижама Milana №12",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-12.jpg"},
+  {id:74, name:"Пижама Milana №13",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-13.jpg"},
+  {id:75, name:"Пижама Milana №14",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-14.jpg"},
+  {id:76, name:"Пижама Milana №15",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-15.jpg"},
+  {id:77, name:"Пижама Milana №16",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-16.jpg"},
+  {id:78, name:"Пижама Milana №17",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-17.jpg"},
+  {id:79, name:"Пижама Milana №18",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-18.jpg"},
+  {id:80, name:"Пижама Milana №19",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-19.jpg"},
+  {id:81, name:"Пижама Milana №20",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-20.jpg"},
+  {id:82, name:"Пижама Milana №21",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-21.jpg"},
+  {id:83, name:"Пижама Milana №22",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-22.jpg"},
+  {id:84, name:"Пижама Milana №23",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-23.jpg"},
+  {id:85, name:"Пижама Milana №24",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-24.jpg"},
+  {id:86, name:"Пижама Milana №25",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-25.jpg"},
+  {id:87, name:"Пижама Milana №26",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-26.jpg"},
+  {id:88, name:"Пижама Milana №27",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-27.jpg"},
+  {id:89, name:"Пижама Milana №28",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-28.jpg"},
+  {id:90, name:"Пижама Milana №29",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-29.jpg"},
+  {id:91, name:"Пижама Milana №30",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-30.jpg"},
+  {id:92, name:"Пижама Milana №31",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-31.jpg"},
+  {id:93, name:"Пижама Milana №32",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-32.jpg"},
+  {id:94, name:"Пижама Milana №33",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-33.jpg"},
+  {id:95, name:"Пижама Milana №34",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-34.jpg"},
+  {id:96, name:"Пижама Milana №35",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-35.jpg"},
+  {id:97, name:"Пижама Milana №36",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-36.jpg"},
+  {id:98, name:"Пижама Milana №37",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-37.jpg"},
+  {id:99, name:"Пижама Milana №38",   brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-38.jpg"},
+  {id:100, name:"Пижама Milana №39",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-39.jpg"},
+  {id:101, name:"Пижама Milana №40",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-40.jpg"},
+  {id:102, name:"Пижама Milana №41",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-41.jpg"},
+  {id:103, name:"Пижама Milana №42",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-42.jpg"},
+  {id:104, name:"Пижама Milana №43",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-43.jpg"},
+  {id:105, name:"Пижама Milana №44",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-44.jpg"},
+  {id:106, name:"Пижама Milana №45",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-45.jpg"},
+  {id:107, name:"Пижама Milana №46",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-46.jpg"},
+  {id:108, name:"Пижама Milana №47",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-47.jpg"},
+  {id:109, name:"Пижама Milana №48",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-48.jpg"},
+  {id:110, name:"Пижама Milana №49",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-49.jpg"},
+  {id:111, name:"Пижама Milana №50",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-50.jpg"},
+  {id:112, name:"Пижама Milana №51",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-51.jpg"},
+  {id:113, name:"Пижама Milana №52",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-52.jpg"},
+  {id:114, name:"Пижама Milana №53",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-53.jpg"},
+  {id:115, name:"Пижама Milana №54",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-54.jpg"},
+  {id:116, name:"Пижама Milana №55",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-55.jpg"},
+  {id:117, name:"Пижама Milana №56",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-56.jpg"},
+  {id:118, name:"Пижама Milana №57",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-57.jpg"},
+  {id:119, name:"Пижама Milana №58",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-58.jpg"},
+  {id:120, name:"Пижама Milana №59",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-59.jpg"},
+  {id:121, name:"Пижама Milana №60",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-60.jpg"},
+  {id:122, name:"Пижама Milana №61",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-61.jpg"},
+  {id:123, name:"Пижама Milana №62",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-62.jpg"},
+  {id:124, name:"Пижама Milana №63",  brand:"Milana", category:"Пижамы", pricePerItem:650, packSize:6, packPrice:4100, image:"assets/images/milana/pajama-63.jpg"}
 ];
 
 // ─────────────────── CART ───────────────────
@@ -1605,31 +1598,6 @@ document.addEventListener('click',e=>{
   btn.classList.add('ripple');
   setTimeout(()=>btn.classList.remove('ripple'),700);
 });
-
-// ─────────────────── VIEW TOGGLE ───────────────────
-let currentView = 'model';
-
-function setView(view) {
-  currentView = view;
-  document.getElementById('btn-model').classList.toggle('active', view === 'model');
-  document.getElementById('btn-flat').classList.toggle('active', view === 'flat');
-
-  document.querySelectorAll('.product-card img').forEach(img => {
-    const src = img.getAttribute('src') || img.getAttribute('data-src');
-    if (!src || !src.includes('milana')) return;
-
-    if (view === 'flat') {
-      img.setAttribute('data-model-src', src);
-      const filename = src.split('/').pop();
-      const flatSrc = src.replace(filename, 'flat-' + filename);
-      img.src = flatSrc;
-    } else {
-      const modelSrc = img.getAttribute('data-model-src');
-      if (modelSrc) img.src = modelSrc;
-    }
-  });
-}
-
 </script>
 </body>
 </html>
