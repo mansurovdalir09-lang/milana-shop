@@ -1238,7 +1238,7 @@ function navigate(page){
   currentPage = page;
   window.scrollTo({top:0});
   history.pushState(null,'','#'+page);
-  if(page==='catalog') renderCatalog();
+  if(page==='catalog'){ renderCatalog(); updateViewToggleVisibility(); }
   if(page==='cart') renderCart();
   if(page==='checkout') renderCheckout();
   // active nav
@@ -1419,12 +1419,26 @@ function setFilter(type, val, btn){
   if(type==='brand'){
     filterBrand = val;
     document.querySelectorAll('[data-brand]').forEach(b=>b.classList.remove('active'));
+    updateViewToggleVisibility();
   } else {
     filterCat = val;
     document.querySelectorAll('[data-cat]').forEach(b=>b.classList.remove('active'));
   }
   btn.classList.add('active');
   renderCatalog();
+}
+
+function updateViewToggleVisibility(){
+  const toggle = document.querySelector('.view-toggle');
+  if(!toggle) return;
+  const show = (filterBrand === 'milana' || filterBrand === 'all');
+  toggle.style.display = show ? 'flex' : 'none';
+  if(!show && currentView !== 'model'){
+    // сбрасываем на «С моделью» чтобы не оставались битые flat-src
+    currentView = 'model';
+    document.getElementById('btn-model')?.classList.add('active');
+    document.getElementById('btn-flat')?.classList.remove('active');
+  }
 }
 
 // ─────────────────── RENDER CART ───────────────────
