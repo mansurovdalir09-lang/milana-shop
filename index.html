@@ -920,6 +920,8 @@ footer{
       <div class="filter-sep"></div>
       <button class="filter-btn active" data-cat="all" onclick="setFilter('cat','all',this)">Все</button>
       <button class="filter-btn" data-cat="Пижамы" onclick="setFilter('cat','Пижамы',this)">Пижамы</button>
+      <button class="filter-btn" data-cat="sets-shorts" onclick="setFilter('cat','sets-shorts',this)">Майка и шорты</button>
+      <button class="filter-btn" data-cat="tshirt-shorts" onclick="setFilter('cat','tshirt-shorts',this)">Футболка и шорты</button>
       <button class="filter-btn" data-cat="Комплекты" onclick="setFilter('cat','Комплекты',this)">Комплекты</button>
       <button class="filter-btn" data-cat="Туники" onclick="setFilter('cat','Туники',this)">Туники</button>
       <button class="filter-btn" data-cat="Сорочки" onclick="setFilter('cat','Сорочки',this)">Сорочки</button>
@@ -1137,14 +1139,14 @@ const products = [
   {id:109, name:'Milana Пижама с длинными штанами, принт геометрия', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-9.jpg', price:850, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
   {id:110, name:'Milana Комплект футболка и бриджи, принт сердечки', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-10.jpg', price:750, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
   {id:111, name:'Milana Туника с молнией, принт цветы', category:'tunics', brand:'MILANA', image:'assets/images/milana/pajama-11.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
-  {id:112, name:'Milana Комплект футболка и шорты, принт геометрия', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-12.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
-  {id:113, name:'Milana Комплект майка и шорты, принт геометрия', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-13.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
-  {id:114, name:'Milana Комплект майка и шорты, принт цветы', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-14.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
+  {id:112, name:'Milana Комплект футболка и шорты, принт геометрия', category:'tshirt-shorts', brand:'MILANA', image:'assets/images/milana/pajama-12.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
+  {id:113, name:'Milana Комплект майка и шорты, принт геометрия', category:'sets-shorts', brand:'MILANA', image:'assets/images/milana/pajama-13.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
+  {id:114, name:'Milana Комплект майка и шорты, принт цветы', category:'sets-shorts', brand:'MILANA', image:'assets/images/milana/pajama-14.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
   {id:115, name:'Milana Комплект футболка и бриджи, принт геометрия', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-15.jpg', price:750, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
   {id:116, name:'Milana Пижама с воротником, принт листья', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-16.jpg', price:900, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
   {id:117, name:'Milana Туника с молнией, принт горошек', category:'tunics', brand:'MILANA', image:'assets/images/milana/pajama-17.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
-  {id:118, name:'Milana Комплект майка и шорты, принт геометрия', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-18.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
-  {id:119, name:'Milana Комплект футболка и шорты, принт сердечки', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-19.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
+  {id:118, name:'Milana Комплект майка и шорты, принт геометрия', category:'sets-shorts', brand:'MILANA', image:'assets/images/milana/pajama-18.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
+  {id:119, name:'Milana Комплект футболка и шорты, принт сердечки', category:'tshirt-shorts', brand:'MILANA', image:'assets/images/milana/pajama-19.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
   {id:120, name:'Milana Туника с молнией, принт пейсли', category:'tunics', brand:'MILANA', image:'assets/images/milana/pajama-20.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
   {id:121, name:'Milana Пижама с воротником, принт геометрия', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-21.jpg', price:900, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
   {id:122, name:'Milana Пижама с длинными штанами, принт цветы', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-22.jpg', price:850, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
@@ -1167,7 +1169,7 @@ const products = [
   {id:139, name:'Milana Пижама с воротником и шортами, принт геометрия', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-39.jpg', price:850, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
   {id:140, name:'Milana Халат длинный, принт геометрия', category:'robes', brand:'MILANA', image:'assets/images/milana/pajama-40.jpg', price:900, packSize:5, sizes:'46-56', unit:'шт', photoType:'model'},
   {id:141, name:'Milana Пижама с воротником, принт сердечки', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-41.jpg', price:900, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
-  {id:142, name:'Milana Комплект футболка и шорты, принт геометрия', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-42.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
+  {id:142, name:'Milana Комплект футболка и шорты, принт геометрия', category:'tshirt-shorts', brand:'MILANA', image:'assets/images/milana/pajama-42.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
   {id:143, name:'Milana Пижама с длинными штанами, принт вишни', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-43.jpg', price:850, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
   {id:144, name:'Milana Туника с рукавом 3/4, принт геометрия', category:'tunics', brand:'MILANA', image:'assets/images/milana/pajama-44.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
   {id:145, name:'Milana Пижама с воротником, принт листья', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-45.jpg', price:900, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
@@ -1408,7 +1410,7 @@ function renderCatalog(){
     }
   }
   if(filterCat!=='all'){
-    const CAT_MAP = {'Пижамы':['Пижамы','pajamas'],'Туники':['Туники','tunics'],'Сорочки':['Сорочки','nightgowns'],'Халаты':['Халаты','robes']};
+    const CAT_MAP = {'Пижамы':['Пижамы','pajamas'],'Туники':['Туники','tunics'],'Сорочки':['Сорочки','nightgowns'],'Халаты':['Халаты','robes'],'Майка и шорты':['sets-shorts'],'Футболка и шорты':['tshirt-shorts'],'sets-shorts':['sets-shorts'],'tshirt-shorts':['tshirt-shorts']};
     const allowed = CAT_MAP[filterCat] || [filterCat];
     filtered = filtered.filter(p=>allowed.includes(p.category));
   }
