@@ -1485,7 +1485,7 @@ function renderCart(){
       <div class="qty-control">
         <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
         <span class="qty-val">${item.qty}</span>
-        <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+        <button class="qty-btn" onclick="changeQty(${item.id},1)" ${item.qty>=MAX_QTY?'disabled style="opacity:0.4;cursor:not-allowed"':''}>+</button>
       </div>
       <div class="cart-item-price">${(item.price*item.qty).toLocaleString('ru-RU')} ₽</div>
       <button class="cart-item-remove" onclick="removeFromCart(${item.id})" title="Удалить">
@@ -1509,10 +1509,13 @@ function renderCart(){
     </div>`;
 }
 
+const MAX_QTY = 10;
 function changeQty(id, delta){
   const item = cart.find(x=>x.id===id);
   if(!item) return;
-  item.qty = Math.max(1, item.qty+delta);
+  const next = item.qty + delta;
+  if(next > MAX_QTY){ showToast('Максимум 10 упаковок одного товара'); return; }
+  item.qty = Math.max(1, next);
   saveCart();
   updateCartUI();
   renderCart();
