@@ -1070,10 +1070,14 @@ footer{
 
 <script>
 // Автоматически определяем базовый путь
-const BASE_PATH = (location.hostname === 'localhost' ||
-                   location.hostname === '127.0.0.1' ||
-                   location.protocol === 'file:')
-                   ? '' : '/milana-shop';
+const BASE_PATH = (()=>{
+  if(location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') return '';
+  // GitHub Pages user site (username.github.io) — served at root
+  if(location.hostname.endsWith('.github.io') && location.pathname === '/') return '';
+  // GitHub Pages project site (username.github.io/repo-name)
+  const parts = location.pathname.split('/').filter(Boolean);
+  return parts.length ? '/'+parts[0] : '';
+})();
 
 // Применяем BASE_PATH к статичным HTML-изображениям (data-src)
 document.querySelectorAll('img[data-src]').forEach(img => {
@@ -1169,7 +1173,7 @@ const products = [
   {id:124, name:'Milana Сорочка ночная, принт горошек, тёмно-синяя', category:'nightgowns', brand:'MILANA', image:'assets/images/milana/pajama-24.jpg', price:550, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
   {id:125, name:'Milana Халат длинный, принт геометрия, серо-бежевый', category:'robes', brand:'MILANA', image:'assets/images/milana/pajama-25.jpg', price:900, packSize:5, sizes:'46-56', unit:'шт', photoType:'flat'},
   {id:126, name:'Milana Пижама с воротником, принт мелкая диагональ, серая', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-26.jpg', price:900, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
-  {id:127, name:'Milana Пижама хлопок, Victoria's Secret, чёрная', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-27.jpg', price:850, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
+  {id:127, name:"Milana Пижама хлопок, Victoria's Secret, чёрная", category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-27.jpg', price:850, packSize:6, sizes:'46-56', unit:'шт', photoType:'flat'},
   {id:128, name:'Milana Пижама с воротником, принт ромбы, бежевая', category:'pajamas', brand:'MILANA', image:'assets/images/milana/pajama-28.jpg', price:900, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
   {id:129, name:'Milana Халат с пуговицами, мелкий принт', category:'robes', brand:'MILANA', image:'assets/images/milana/pajama-29.jpg', price:900, packSize:5, sizes:'46-56', unit:'шт', photoType:'flat'},
   {id:130, name:'Milana Туника с молнией, принт пейсли, чёрная', category:'tunics', brand:'MILANA', image:'assets/images/milana/pajama-30.jpg', price:650, packSize:6, sizes:'46-56', unit:'шт', photoType:'model'},
