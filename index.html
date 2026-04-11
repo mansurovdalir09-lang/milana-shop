@@ -695,7 +695,7 @@ footer{
 
 <!-- HEADER -->
 <header id="header">
-  <a href="#home" class="logo" onclick="navigate('home')">
+  <a href="#home" class="logo" onclick="navigate('home');return false">
     <svg width="112" height="56" viewBox="0 0 112 56" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M5.86662 37.4567C5.19815 37.4606 4.52969 37.4644 3.82435 37.45C3.77619 37.4162 3.76139 37.4056 3.74307 37.3998C3.73887 37.3224 3.73099 37.2451 3.73099 37.1677C3.73077 26.31 3.73112 15.4522 3.74972 4.55735C3.7836 4.50872 3.79424 4.49366 3.79994 4.4751C3.94835 4.51841 4.14011 4.51728 4.2378 4.61258C4.70418 5.06754 5.12807 5.56637 5.59841 6.01687C6.64183 7.01629 7.70013 8.00031 8.75986 8.98251C9.4695 9.64022 10.1927 10.2833 10.9086 10.9342C11.9015 11.837 12.8931 12.7411 13.8855 13.6444C14.6256 14.3182 15.3664 14.9913 16.1066 15.6651C17.0989 16.5684 18.0904 17.4727 19.0833 18.3754C19.7992 19.0264 20.5179 19.6743 21.2333 20.3258C22.2501 21.2517 23.2645 22.1805 24.2811 23.1066C25.0046 23.7658 25.731 24.4219 26.4547 25.0809C27.4635 25.9993 28.4703 26.9199 29.4792 27.8382C30.1949 28.4895 30.9116 29.1399 31.63 29.7881C32.3963 30.4795 33.1652 31.1678 33.9987 31.9165C34.051 31.8348 34.0914 31.7371 34.1606 31.6683C37.2147 28.6321 40.2701 25.5971 43.328 22.5647C45.4788 20.4319 47.6334 18.303 49.7864 16.1724C51.8999 14.0809 54.0128 11.9888 56.1274 9.89834C57.8627 8.1828 59.602 6.47129 61.3334 4.75178C61.5021 4.5842 61.6113 4.55493 61.7896 4.7409C62.2342 5.20445 62.6985 5.649 63.1714 6.11756C63.0693 6.22673 62.9907 6.316 62.9067 6.40002C61.5875 7.72023 60.2714 9.04367 58.9469 10.3586C56.7892 12.5007 54.6259 14.6372 52.4648 16.7759C50.3353 18.8833 48.2056 20.9905 46.0761 23.0979C43.9149 25.2366 41.755 27.3764 39.5924 29.5136C38.0304 31.0573 36.4624 32.595 34.9031 34.1414C34.6229 34.4192 34.372 34.7264 34.0809 35.0496C33.6897 34.7062 33.3158 34.3891 32.9545 34.0583C32.3203 33.4779 31.697 32.8855 31.0633 32.3045C30.0658 31.39 29.0637 30.4806 28.0631 29.5695C27.3229 28.8955 26.5819 28.2225 25.8417 27.5485C24.8411 26.6374 23.8417 25.7251 22.8405 24.8147C22.1327 24.1711 21.4215 23.5312 20.7142 22.8871C19.689 21.9535 18.6668 21.0167 17.6418 20.083C16.9263 19.4312 16.2075 18.7831 15.4914 18.132C14.4983 17.2291 13.5065 16.3247 12.5139 15.4212C11.7736 14.7473 11.0327 14.0739 10.2924 13.4C9.29979 12.4964 8.3086 11.5914 7.31452 10.6895C6.91652 10.3284 6.51241 9.97404 6.08375 9.58721C6.02016 9.57257 5.98389 9.58733 5.94763 9.6021C5.94383 9.7461 5.93671 9.89011 5.93669 10.0341C5.93582 19.1356 5.93552 28.237 5.91688 37.3754C5.88305 37.4235 5.8724 37.4384 5.86662 37.4567Z" fill="black"/>
       <path d="M82.0129 14.4537C79.993 12.4336 77.9898 10.4302 75.9866 8.42671C75.6524 8.0925 75.6131 8.09326 75.2692 8.43734C74.3817 9.32532 73.4956 10.2148 72.6061 11.1008C67.0986 16.587 61.5919 22.074 56.0817 27.5575C52.8569 30.7668 49.6189 33.9629 46.4092 37.1872C46.09 37.5079 45.8003 37.6307 45.3663 37.6123C44.5837 37.5792 43.7987 37.603 42.9185 37.603C43.0542 37.4536 43.1268 37.3666 43.2066 37.2868C45.7514 34.7408 48.2936 32.1922 50.8432 29.6509C56.3208 24.1909 61.8005 18.7331 67.2829 13.278C69.8931 10.6808 72.5106 8.09088 75.127 5.49998C75.5986 5.03298 75.7337 5.15564 76.0701 5.49345C77.2148 6.64274 78.3611 7.79046 79.5105 8.93508C84.4234 13.8276 89.3369 18.7194 94.2515 23.6102C98.4494 27.7878 102.646 31.9664 106.852 36.1362C107.27 36.551 107.748 36.9062 108.195 37.2921C108.276 37.3619 108.343 37.4468 108.459 37.5693C108.32 37.585 108.241 37.6016 108.161 37.6018C107.372 37.6037 106.582 37.5782 105.795 37.613C105.378 37.6315 105.089 37.4691 104.817 37.1936C104.233 36.6 103.64 36.0139 103.051 35.4247C98.8558 31.2294 94.6647 27.03 90.464 22.8402C87.6596 20.0432 84.8415 17.2599 82.0129 14.4537Z" fill="#C44049"/>
@@ -708,11 +708,11 @@ footer{
     </svg>
   </a>
   <nav>
-    <a href="#home" onclick="navigate('home')">О Нас</a>
-    <a href="#catalog" onclick="navigate('catalog')">Каталог</a>
-    <a href="#home" onclick="navigate('home');scrollToSection('how')">Условия работы</a>
-    <a href="#home" onclick="navigate('home');scrollToSection('contacts')">Доставка и оплата</a>
-    <a href="#home" onclick="navigate('home');scrollToSection('contacts')">Контакты</a>
+    <a href="#home" onclick="navigate('home');return false">О Нас</a>
+    <a href="#catalog" onclick="navigate('catalog');return false">Каталог</a>
+    <a href="#home" onclick="navigate('home');scrollToSection('how');return false">Условия работы</a>
+    <a href="#home" onclick="navigate('home');scrollToSection('contacts');return false">Доставка и оплата</a>
+    <a href="#home" onclick="navigate('home');scrollToSection('contacts');return false">Контакты</a>
   </nav>
   <button class="cart-btn" onclick="navigate('cart')" aria-label="Корзина">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
@@ -725,11 +725,11 @@ footer{
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#home" onclick="navigate('home');closeMobileMenu()">О Нас</a>
-  <a href="#catalog" onclick="navigate('catalog');closeMobileMenu()">Каталог</a>
-  <a href="#home" onclick="navigate('home');closeMobileMenu()">Условия работы</a>
-  <a href="#home" onclick="navigate('home');closeMobileMenu()">Доставка и оплата</a>
-  <a href="#home" onclick="navigate('home');scrollToSection('contacts');closeMobileMenu()">Контакты</a>
+  <a href="#home" onclick="navigate('home');closeMobileMenu();return false">О Нас</a>
+  <a href="#catalog" onclick="navigate('catalog');closeMobileMenu();return false">Каталог</a>
+  <a href="#home" onclick="navigate('home');closeMobileMenu();return false">Условия работы</a>
+  <a href="#home" onclick="navigate('home');closeMobileMenu();return false">Доставка и оплата</a>
+  <a href="#home" onclick="navigate('home');scrollToSection('contacts');closeMobileMenu();return false">Контакты</a>
   <button class="btn-primary" onclick="navigate('cart');closeMobileMenu()" style="animation:none;opacity:1;transform:none;">
     Корзина <span id="mobileCartCount"></span>
   </button>
@@ -744,7 +744,7 @@ footer{
       <h1 id="hero-h1"></h1>
       <h2>Прямые поставки из Узбекистана</h2>
       <p class="hero-sub">Натуральный, экологичный — для малого и среднего бизнеса</p>
-      <button class="btn-primary" onclick="navigate('catalog')" id="hero-btn">
+      <button class="btn-primary" onclick="navigate('catalog');return false" id="hero-btn">
         Перейти в каталог
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
@@ -819,7 +819,7 @@ footer{
     </div>
     <div class="products-grid" id="preview-grid"></div>
     <div style="text-align:center">
-      <button class="btn-see-all" onclick="navigate('catalog')" style="display:block;margin:40px auto 0;text-align:center">Смотреть весь каталог →</button>
+      <button class="btn-see-all" onclick="navigate('catalog');return false" style="display:block;margin:40px auto 0;text-align:center">Смотреть весь каталог →</button>
     </div>
   </section>
 
@@ -880,11 +880,11 @@ footer{
       </div>
       <div class="footer-nav-col">
         <h4>Информация</h4>
-        <a href="#home" onclick="navigate('home')">О Нас</a>
-        <a href="#catalog" onclick="navigate('catalog')">Каталог</a>
-        <a href="#home" onclick="navigate('home')">Условия Работы</a>
-        <a href="#home" onclick="navigate('home')">Доставка и оплата</a>
-        <a href="#home" onclick="navigate('home');scrollToSection('contacts')">Контакты</a>
+        <a href="#home" onclick="navigate('home');return false">О Нас</a>
+        <a href="#catalog" onclick="navigate('catalog');return false">Каталог</a>
+        <a href="#home" onclick="navigate('home');return false">Условия Работы</a>
+        <a href="#home" onclick="navigate('home');return false">Доставка и оплата</a>
+        <a href="#home" onclick="navigate('home');scrollToSection('contacts');return false">Контакты</a>
         <a href="#">Политика конфиденциальности</a>
         <a href="#">Оферта данных</a>
       </div>
@@ -945,7 +945,7 @@ footer{
 <div class="page" id="cart-page">
   <div class="cart-header-bar">
     <h1 class="page-title">Корзина</h1>
-    <button onclick="navigate('catalog')" style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:6px;">
+    <button onclick="navigate('catalog');return false" style="font-size:14px;color:var(--gray);display:flex;align-items:center;gap:6px;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       Продолжить покупки
     </button>
@@ -1060,7 +1060,7 @@ footer{
     <p>Свяжемся с вами в течение 2 часов для подтверждения.</p>
     <p>Номер заказа:</p>
     <div class="order-num" id="order-num">#000000</div>
-    <button class="btn-back-catalog" onclick="navigate('catalog')">
+    <button class="btn-back-catalog" onclick="navigate('catalog');return false">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       Вернуться в каталог
     </button>
@@ -1277,6 +1277,10 @@ window.addEventListener('popstate',()=>{
   const hash = location.hash.replace('#','') || 'home';
   navigate(hash);
 });
+window.addEventListener('hashchange',()=>{
+  const hash = location.hash.replace('#','') || 'home';
+  navigate(hash);
+});
 
 window.addEventListener('load',()=>{
   const hash = location.hash.replace('#','') || 'home';
@@ -1309,8 +1313,18 @@ function initScroll(){
     entries.forEach(e=>{
       if(e.isIntersecting) e.target.classList.add('visible');
     });
-  },{threshold:0.15});
-  document.querySelectorAll('.why-card,.product-card,.step').forEach(el=>obs.observe(el));
+  },{threshold:0.05});
+  document.querySelectorAll('.why-card,.product-card,.step').forEach(el=>{
+    if(el.getBoundingClientRect().top < window.innerHeight * 0.95){
+      el.classList.add('visible');
+    } else {
+      obs.observe(el);
+    }
+  });
+  // страховка: через 800ms показать все если observer не сработал
+  setTimeout(()=>{
+    document.querySelectorAll('.why-card,.product-card,.step').forEach(el=>el.classList.add('visible'));
+  }, 800);
 
   // scroll-to-top
   window.addEventListener('scroll',()=>{
@@ -1444,12 +1458,9 @@ function renderCatalog(){
   grid.innerHTML = filtered.length
     ? filtered.map((p,i)=>productCardHTML(p,i*0.05)).join('')
     : '<p style="padding:40px;color:var(--gray);grid-column:1/-1;">Нет товаров по выбранным фильтрам.</p>';
-  // animate
+  // animate — каталог всегда виден сверху, сразу добавляем visible
   requestAnimationFrame(()=>{
-    const obs = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
-    },{threshold:0.05});
-    grid.querySelectorAll('.product-card').forEach(el=>obs.observe(el));
+    grid.querySelectorAll('.product-card').forEach(el=>el.classList.add('visible'));
   });
 }
 
@@ -1488,7 +1499,7 @@ function renderCart(){
       <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
       <h3>Корзина пуста</h3>
       <p>Добавьте товары из каталога, чтобы оформить заказ</p>
-      <button class="btn-primary" onclick="navigate('catalog')" style="animation:none;opacity:1;transform:none;">Перейти в каталог</button>
+      <button class="btn-primary" onclick="navigate('catalog');return false" style="animation:none;opacity:1;transform:none;">Перейти в каталог</button>
     </div>`;
     return;
   }
@@ -1522,7 +1533,7 @@ function renderCart(){
       <div class="summary-row total"><span>ИТОГО</span><span>${total.toLocaleString('ru-RU')} ₽</span></div>
       <div class="summary-note">* Стоимость доставки рассчитывается при оформлении</div>
       <div class="cart-actions">
-        <button class="btn-outline" onclick="navigate('catalog')">Продолжить покупки</button>
+        <button class="btn-outline" onclick="navigate('catalog');return false">Продолжить покупки</button>
         <button class="btn-checkout" onclick="navigate('checkout')">Оформить заказ →</button>
       </div>
     </div>`;
