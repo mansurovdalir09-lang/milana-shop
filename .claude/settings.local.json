@@ -9,7 +9,19 @@
       "Bash(mv baror-1299.jpg.png baror-1299.png)",
       "Bash(mv baror-698.jpg.png baror-698.png)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(md5sum assets/images/milana/pajama-*.jpg)",
+      "Read(//c/Users/user/Desktop/Магазин-Милана/**)",
+      "Bash(python3 -c ':*)",
+      "Bash(python -c \"from PIL import Image; print\\('ok'\\)\")",
+      "Bash(py --version)",
+      "Bash(convert --version)",
+      "Bash(node -e ':*)",
+      "Bash(py -3 --version)",
+      "Bash(node -e \"require\\('@anthropic-ai/sdk'\\); console.log\\('ok'\\)\")",
+      "Bash(npm install:*)",
+      "Bash(node -e \"const fs=require\\('fs'\\); const html=fs.readFileSync\\('index.html','utf8'\\); const scriptMatch=html.match\\(/<script>\\([\\\\s\\\\S]*?\\)<\\\\/script>/g\\); if\\(scriptMatch\\){ try{ require\\('vm'\\).runInNewContext\\(scriptMatch[scriptMatch.length-1].replace\\(/<\\\\/?script>/g,''\\).replace\\(/document\\\\./g,'\\({querySelector:\\(\\)=>\\({classList:{remove:\\(\\)=>{},add:\\(\\)=>{}},forEach:\\(\\)=>{},style:{}},addEventListener:\\(\\)=>{},getElementById:\\(\\)=>\\({classList:{remove:\\(\\)=>{},add:\\(\\)=>{}},innerHTML:\\\\\"\\\\\"}\\),querySelectorAll:\\(\\)=>[],scrollTo:\\(\\)=>{}}\\).'\\).replace\\(/window\\\\./g,'\\({addEventListener:\\(\\)=>{}}\\).'\\).replace\\(/localStorage/g,'\\({getItem:\\(\\)=>null,setItem:\\(\\)=>{}}\\)'\\).replace\\(/history\\\\./g,'\\({pushState:\\(\\)=>{}}\\).'\\).replace\\(/location\\\\./g,'\\({hash:\\\\\"\\\\\"}\\).'\\)\\); console.log\\('No syntax error'\\); } catch\\(e\\){ console.log\\('ERROR:',e.message.substring\\(0,200\\)\\); } }\")",
+      "Bash(node fix_names.js)"
     ]
   }
 }
