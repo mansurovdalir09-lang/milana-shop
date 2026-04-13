@@ -284,7 +284,8 @@ section{padding:80px 60px;}
 .product-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 16px 40px rgba(26,20,16,0.12);}
 .product-img{
   aspect-ratio:3/4;background:var(--beige-light);
-  position:relative;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
   color:var(--beige);
 }
 .product-badge{
@@ -662,15 +663,12 @@ footer{
   .why-grid{grid-template-columns:1fr;}
   .products-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
   .products-grid .product-card{width:100%;}
-  .products-grid .product-img{aspect-ratio:unset;height:240px;width:100%;}
-  .products-grid .product-img img{width:100%;height:100%;object-fit:cover;}
   .steps-grid{grid-template-columns:1fr;gap:32px;}
   .steps-grid::before{display:none;}
   /* Catalog */
   .catalog-header{padding:24px 16px 0;}
   .catalog-grid{grid-template-columns:repeat(2,1fr);gap:10px;padding:0 10px 60px;}
-  .product-img{aspect-ratio:unset;height:200px;width:100%;}
-  .product-img img{width:100%;height:100%;object-fit:cover;display:block;}
+  .product-img{aspect-ratio:3/4;}
   .product-card{border-radius:12px;}
   .product-info{padding:10px 10px 12px;}
   .product-name{font-size:0.82rem;line-height:1.3;min-height:2.6em;}
@@ -693,7 +691,6 @@ footer{
 }
 @media(max-width:600px){
   .products-grid{grid-template-columns:1fr;}
-  .products-grid .product-img{height:280px;}
   .catalog-grid{grid-template-columns:repeat(2,1fr);gap:8px;padding:0 8px 60px;}
   .product-img{height:180px;}
   .form-row{grid-template-columns:1fr;}
@@ -1420,7 +1417,7 @@ const UNDERWEAR_CATS = new Set(['Трусы','Лифчики','Комплект�
 function productCardHTML(p, stagger=0){
   const bg = CAT_GRADIENTS[p.category]||'linear-gradient(135deg,#E8D5C0,#D4B894)';
   const imgContent = p.image
-    ? `<img src="${BASE_PATH ? BASE_PATH+'/' : ''}${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" onerror="this.style.display='none'">`
+    ? `<img src="${BASE_PATH ? BASE_PATH+'/' : ''}${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;" onerror="this.style.display='none'">`
     : `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(139,94,74,0.35)" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
   const perItem = p.pricePerItem ?? p.price;
   const packPrice = p.packPrice ?? (perItem * p.packSize);
