@@ -665,11 +665,14 @@ footer{
   .steps-grid::before{display:none;}
   /* Catalog */
   .catalog-header{padding:24px 16px 0;}
-  .catalog-grid{grid-template-columns:repeat(2,1fr);gap:12px;padding:0 12px 60px;}
-  .product-img{height:200px;}
-  .product-name{font-size:0.85rem;}
-  .product-price{font-size:1rem;}
-  .btn-add{padding:10px;font-size:0.85rem;}
+  .catalog-grid{grid-template-columns:repeat(2,1fr);gap:10px;padding:0 10px 60px;}
+  .product-img{height:220px;}
+  .product-card{border-radius:12px;}
+  .product-info{padding:10px 10px 12px;}
+  .product-name{font-size:0.82rem;line-height:1.3;min-height:2.6em;}
+  .product-price{font-size:0.95rem;}
+  .product-price-sub{font-size:0.75rem;}
+  .btn-add{padding:10px;font-size:0.82rem;border-radius:8px;}
   /* Cart */
   .cart-content{grid-template-columns:1fr;}
   .cart-header-bar{padding:24px 16px 16px;}
@@ -686,7 +689,8 @@ footer{
 }
 @media(max-width:600px){
   .products-grid{grid-template-columns:1fr;}
-  .catalog-grid{grid-template-columns:repeat(2,1fr);}
+  .catalog-grid{grid-template-columns:repeat(2,1fr);gap:8px;padding:0 8px 60px;}
+  .product-img{height:180px;}
   .form-row{grid-template-columns:1fr;}
   .hero h1{font-size:1.75rem;}
   .hero h2{font-size:1rem;}
@@ -1104,10 +1108,10 @@ document.querySelectorAll('img[data-src]').forEach(img => {
 const products = [
   {id:1,  name:"Майки и шорты",                brand:"Milana",category:"Комплекты",pricePerItem:650, packSize:6,packPrice:4100,badge:"Хит",     image:"assets/images/milana/pajama-13.jpg"},
   {id:2,  name:"Футболка и шорты",             brand:"Milana",category:"Комплекты",pricePerItem:650, packSize:6,packPrice:4100,                   image:"assets/images/milana/pajama-12.jpg"},
-  {id:3,  name:"Пижама хлопок с шортами",       brand:"Milana",category:"Пижамы",   pricePerItem:850, packSize:6,packPrice:5400,                   image:"assets/images/milana/pajama-1.jpg"},
-  {id:4,  name:"Пижама хлопок с длинными штанами", brand:"Milana",category:"Пижамы",pricePerItem:900, packSize:6,packPrice:5700,                  image:"assets/images/milana/pajama-2.jpg"},
+  {id:3,  name:"Туника хлопок, однотонная",      brand:"Milana",category:"Туники",   pricePerItem:850, packSize:6,packPrice:5100,                   image:"assets/images/milana/pajama-1.jpg"},
+  {id:4,  name:"Сорочка ночная хлопок",          brand:"Milana",category:"Сорочки", pricePerItem:550, packSize:6,packPrice:3300,                   image:"assets/images/milana/pajama-2.jpg"},
   {id:5,  name:"Пижама с воротником",          brand:"Milana",category:"Пижамы",   pricePerItem:950, packSize:6,packPrice:6000,                   image:"assets/images/milana/pajama-16.jpg"},
-  {id:6,  name:"Комплект тройка (футболка, штаны, шорты)", brand:"Milana",category:"Комплекты",pricePerItem:1050,packSize:6,packPrice:6600,badge:"Выгодно", image:"assets/images/milana/pajama-3.jpg"},
+  {id:6,  name:"Комплект футболка и бриджи",     brand:"Milana",category:"Пижамы",  pricePerItem:750, packSize:6,packPrice:4500,badge:"Выгодно",   image:"assets/images/milana/pajama-3.jpg"},
   {id:7,  name:"Лямки",                        brand:"Milana",category:"Прочее",   pricePerItem:550, packSize:5,packPrice:2900,                   image:"assets/images/milana/pajama-4.jpg"},
   {id:8,  name:"Сорочки хлопок",               brand:"Milana",category:"Сорочки",  pricePerItem:650, packSize:6,packPrice:4100,                   image:"assets/images/milana/pajama-5.jpg"},
   {id:9,  name:"Туника базовая",               brand:"Milana",category:"Туники",   pricePerItem:650, packSize:6,packPrice:4100,                   image:"assets/images/milana/pajama-6.jpg"},
