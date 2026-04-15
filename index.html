@@ -920,6 +920,17 @@ footer{
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
         </div>
+        <div style="margin-top:12px;">
+          <label style="display:flex;gap:8px;align-items:flex-start;cursor:pointer;font-size:12px;color:rgba(232,213,192,0.7);line-height:1.4;">
+            <input type="checkbox" id="newsletter-consent"
+                   style="margin-top:2px;accent-color:#C4956A;flex-shrink:0;">
+            <span>Даю <a href="https://drive.google.com/file/d/18Q1vauepRvthlLgJ6V9ILeCsdsNDmaEW/view?usp=sharing" target="_blank" rel="noopener noreferrer"
+                 style="color:#C4956A;text-decoration:underline;">
+                 Согласие на получение рекламной рассылки
+                 </a>
+            </span>
+          </label>
+        </div>
       </div>
     </div>
     <div class="footer-bottom">
@@ -1707,6 +1718,10 @@ function scrollToSection(id){
 
 // ─────────────────── SUBSCRIBE ───────────────────
 function subscribeEmail(){
+  if (!document.getElementById('newsletter-consent').checked) {
+    alert('Пожалуйста, дайте согласие на получение рассылки');
+    return;
+  }
   const inp = document.getElementById('footer-email');
   if(!inp.value||!inp.value.includes('@')){showToast('Введите корректный email');return;}
   showToast('Вы подписались на обновления!');
