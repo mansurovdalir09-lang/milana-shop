@@ -1019,6 +1019,8 @@ footer{
               <option value="">Выберите способ</option>
               <option>СДЭК</option>
               <option>Почта России</option>
+              <option>ТК Энергия</option>
+              <option>ТК Байт-Транзит</option>
               <option>Самовывоз Новосибирск</option>
               <option>Другое</option>
             </select>
@@ -1056,6 +1058,24 @@ footer{
           <label class="payment-opt" id="pay-opt-2">
             <input type="radio" name="payment" value="transfer" onchange="selectPayOpt(2)">
             <span class="payment-opt-label">🏦 Перевод на счёт</span>
+          </label>
+        </div>
+        <div class="consent-checkboxes" style="margin-bottom:20px;display:flex;flex-direction:column;gap:10px;">
+          <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer;">
+            <input type="checkbox" id="consent-oferta" required style="margin-top:3px;accent-color:#5C7A4E;">
+            <span>Я принимаю условия <a href="https://drive.google.com/file/d/1Do0VXArigi5eRkrYbRMfXtUiZYyW0qXf/view?usp=sharing" target="_blank" rel="noopener noreferrer" style="color:#C4956A;text-decoration:underline;">Публичной оферты</a>; ознакомлен с <a href="https://drive.google.com/file/d/1Do0VXArigi5eRkrYbRMfXtUiZYyW0qXf/view?usp=sharing" target="_blank" rel="noopener noreferrer" style="color:#C4956A;text-decoration:underline;">Политикой в отношении обработки персональных данных</a></span>
+          </label>
+          <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer;">
+            <input type="checkbox" id="consent-info" style="margin-top:3px;accent-color:#5C7A4E;">
+            <span>Даю <a href="https://drive.google.com/file/d/1bZTCfkqU4q9G5j0mpT0aH_6DCnYoLtzB/view?usp=sharing" target="_blank" rel="noopener noreferrer" style="color:#C4956A;text-decoration:underline;">Согласие на получение информационной рассылки</a></span>
+          </label>
+          <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer;">
+            <input type="checkbox" id="consent-pd" style="margin-top:3px;accent-color:#5C7A4E;">
+            <span>Даю <a href="https://drive.google.com/file/d/1dgiojK08X7akakl74KW4SHOskXKuuAaB/view?usp=sharing" target="_blank" rel="noopener noreferrer" style="color:#C4956A;text-decoration:underline;">Согласие на обработку персональных данных</a></span>
+          </label>
+          <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer;">
+            <input type="checkbox" id="consent-ads" style="margin-top:3px;accent-color:#5C7A4E;">
+            <span>Даю <a href="https://drive.google.com/file/d/18Q1vauepRvthlLgJ6V9ILeCsdsNDmaEW/view?usp=sharing" target="_blank" rel="noopener noreferrer" style="color:#C4956A;text-decoration:underline;">Согласие на получение рекламной рассылки</a></span>
           </label>
         </div>
         <button type="submit" class="btn-submit" style="margin-top:28px;">Подтвердить заказ</button>
@@ -1605,6 +1625,10 @@ function selectPayOpt(n){
 
 function submitOrder(e){
   e.preventDefault();
+  if (!document.getElementById('consent-oferta').checked) {
+    alert('Необходимо принять условия Публичной оферты');
+    return;
+  }
   // validate
   let valid = true;
   const checks = [
@@ -1723,6 +1747,41 @@ function setView(view) {
   });
 }
 
+</script>
+
+<div id="cookie-banner" style="
+  position:fixed;bottom:0;left:0;right:0;z-index:9999;
+  background:#1a1410;color:#e8d5c0;
+  padding:16px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;
+  font-size:13px;line-height:1.5;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.3);
+">
+  <span style="flex:1;min-width:260px;">
+    На нашем сайте используются cookie-файлы, в том числе сервис веб-аналитики Яндекс.Метрика.
+    Используя сайт, вы соглашаетесь на обработку персональных данных при помощи cookie-файлов.
+    Подробнее об обработке персональных данных вы можете узнать в
+    <a href="https://drive.google.com/file/d/1Do0VXArigi5eRkrYbRMfXtUiZYyW0qXf/view?usp=sharing" target="_blank" rel="noopener noreferrer"
+       style="color:#C4956A;text-decoration:underline;">
+      Политике в отношении обработки персональных данных
+    </a>.
+    Если Вы не согласны, измените настройки браузера или не используйте наш сайт.
+  </span>
+  <button onclick="
+    document.getElementById('cookie-banner').style.display='none';
+    localStorage.setItem('cookie-accepted','1');
+  " style="
+    background:#C4956A;color:white;border:none;
+    padding:10px 24px;border-radius:8px;
+    font-size:13px;cursor:pointer;white-space:nowrap;
+    font-family:inherit;
+  ">Принять</button>
+</div>
+<script>
+  if(localStorage.getItem('cookie-accepted')){
+    document.getElementById('cookie-banner').style.display='none';
+  }
 </script>
 </body>
 </html>
