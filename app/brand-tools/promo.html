@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<title>Milana — промо-видео</title>
+<!--
+  Промо-ролик 1080×1920 для статуса WhatsApp / сторис. Анимация задаётся временем:
+  window.render(t) рисует кадр на секунде t (0…DURATION). Сборка в MP4 — brand-tools/promo-render.js.
+  Параметры: ?spot=141,126,131  (три товара крупно)  &contact=+7 953 890-66-64
+  Открыть в браузере без параметра ?frame — проигрывается в реальном времени для просмотра.
+-->
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{--bg:#F5EDE3;--card:#FBF7F2;--beige:#C4956A;--beige-l:#E8D5C0;--deep:#A87A52;--gd:#3D4A35;--red:#C44049;--dark:#1A1410;--muted:#7A6B5E}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg);font-family:'Jost',sans-serif;color:var(--dark)}
+#v{position:relative;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(60% 40% at 50% 38%,#FBF3E9 0%,rgba(251,243,233,0) 70%),var(--bg)}
+.layer{position:absolute;inset:0;will-change:opacity,transform}
+.serif{font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:-.01em}
+/* 1. логотип */
+#s1{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px}
+#mark{width:560px}
+#s1 .t1{font-size:58px;text-align:center;line-height:1.1}
+#s1 .pill{padding:24px 54px;border-radius:60px;background:var(--gd);color:#fff;font-size:44px;font-weight:600;letter-spacing:.2em}
+/* 2. лента фото */
+#cols{position:absolute;left:-140px;right:-140px;top:-300px;bottom:-300px;display:flex;gap:28px;justify-content:center;transform:rotate(-7deg)}
+.col{width:330px;display:flex;flex-direction:column;gap:28px}
+.col img{width:330px;height:440px;object-fit:cover;border-radius:36px;background:var(--beige-l);box-shadow:0 20px 40px -24px rgba(61,45,30,.6)}
+#s2 .over{position:absolute;left:60px;right:60px;bottom:150px;padding:56px 56px 60px;border-radius:52px;background:rgba(251,247,242,.94);box-shadow:0 30px 60px -30px rgba(61,45,30,.5)}
+#s2 h2{font-size:92px;line-height:.95}
+#s2 .sub{font-size:40px;color:var(--muted);margin-top:22px}
+/* 3. товары крупно */
+.spot .card{position:absolute;left:110px;top:170px;width:860px;height:1150px;border-radius:64px;overflow:hidden;background:var(--beige-l);box-shadow:0 50px 90px -40px rgba(61,45,30,.6);border:10px solid #fff}
+.spot .card img{width:100%;height:100%;object-fit:cover}
+.spot .info{position:absolute;left:80px;right:80px;top:1390px}
+.spot .meta{font-size:30px;letter-spacing:.14em;text-transform:uppercase;color:var(--deep);font-weight:600}
+.spot h3{font-size:72px;line-height:1.02;margin:16px 0 30px}
+.chips{display:flex;gap:18px}
+.chip{border-radius:36px;padding:24px 32px;background:var(--card);font-size:30px;color:var(--muted);line-height:1.1}
+.chip b{display:block;font-size:52px;color:var(--gd);font-weight:600;margin-top:6px}
+.chip.main{background:var(--gd);color:var(--beige-l)}.chip.main b{color:#fff}
+/* 4. преимущества */
+#s4{padding:300px 80px 0}
+#s4 h2{font-size:100px;line-height:.95;margin-bottom:70px}
+.row{display:flex;align-items:center;gap:36px;padding:40px 44px;border-radius:44px;background:var(--card);margin-bottom:28px}
+.row i{flex:none;width:96px;height:96px;border-radius:50%;background:var(--gd);color:#fff;display:grid;place-items:center;font-style:normal;font-size:48px;font-weight:600}
+.row span{font-size:46px;line-height:1.15}
+/* 5. контакты */
+#s5{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:34px;padding:0 70px}
+#s5 img{width:420px}
+#s5 h2{font-size:104px;line-height:.95}
+#s5 .phone{font-size:78px;font-weight:600;color:var(--gd);padding:34px 56px;border-radius:70px;background:var(--card)}
+#s5 .sub{font-size:42px;color:var(--muted);line-height:1.3}
+#s5 .addr{font-size:34px;color:var(--muted)}
+</style></head>
+<body><div id="v">
+  <div class="layer" id="s1"><img id="mark" src="../logo.svg" alt=""><div class="t1 serif">Домашняя одежда<br>из хлопка</div><div class="pill">ОПТОМ</div></div>
+  <div class="layer" id="s2"><div id="cols"></div><div class="over"><h2 class="serif">Пижамы, сорочки,<br>туники, халаты</h2><div class="sub" id="s2sub"></div></div></div>
+  <div id="spots"></div>
+  <div class="layer" id="s4"><h2 class="serif">Почему магазины<br>берут Milana</h2>
+    <div class="row"><i>1</i><span>Размерный ряд в&nbsp;каждой упаковке</span></div>
+    <div class="row"><i>2</i><span>Отгрузка за&nbsp;24&nbsp;часа после оплаты</span></div>
+    <div class="row"><i>3</i><span>Доставка по&nbsp;всей России</span></div>
+    <div class="row"><i>4</i><span>Хлопок, фабрики Узбекистана</span></div></div>
+  <div class="layer" id="s5"><img src="../logo.svg" alt=""><h2 class="serif">Каталог<br>и&nbsp;заказ</h2><div class="phone" id="phone"></div>
+    <div class="sub">Напишите «ОПТ» в&nbsp;WhatsApp или Telegram&nbsp;— пришлём каталог с&nbsp;ценами</div>
+    <div class="addr">Новосибирск, ТК «Восток», ряд 19, места 61–63</div></div>
+</div>
+<script src="../data.js"></script>
+<script>
+const q=new URLSearchParams(location.search), P=window.MILANA_PRODUCTS.filter(p=>p.id>14);
+const by=id=>P.find(p=>p.id===+id);
+const rub=n=>Math.round(n).toLocaleString('ru-RU')+' ₽';
+const SPOT=(q.get('spot')||'141,126,131').split(',').map(by).filter(Boolean).slice(0,3);
+document.getElementById('phone').textContent=q.get('contact')||'+7 953 890-66-64';
+const HOME=P.filter(p=>['Пижамы','Сорочки','Туники','Халаты'].includes(p.cat));
+document.getElementById('s2sub').textContent=`${HOME.length} моделей · упаковки по 5–6 шт · от ${rub(Math.min(...HOME.map(p=>p.opt)))} за штуку`;
+/* лента: только фото Milana на моделях */
+const pool=P.filter(p=>p.brand==='Milana'&&![155,156,159,121,128,133,136].includes(p.id));
+const colsEl=document.getElementById('cols');
+for(let c=0;c<4;c++){const col=document.createElement('div');col.className='col';
+  for(let i=0;i<10;i++){const p=pool[(c*7+i*3)%pool.length];col.insertAdjacentHTML('beforeend',`<img src="../${p.img}" alt="">`)}colsEl.appendChild(col)}
+document.getElementById('spots').innerHTML=SPOT.map((p,i)=>`<div class="layer spot" id="sp${i}">
+  <div class="card"><img src="../${p.img}" alt=""></div>
+  <div class="info"><div class="meta">Milana · ${p.cat} · арт. ${p.id}</div><h3 class="serif">${p.name}</h3>
+  <div class="chips"><div class="chip main">Упаковка ${p.pack} шт<b>${rub(p.packPrice)}</b></div><div class="chip">За штуку<b>${rub(p.opt)}</b></div><div class="chip">Размеры<b>${(p.sizes||'').replace('-','–')}</b></div></div></div></div>`).join('');
+
+/* ── тайминг (секунды) ── */
+const T={s1:[0,2.8],s2:[2.6,7.6],sp:[7.4,9.8,12.2,14.6],s4:[14.4,18.4],s5:[18.2,22]};
+const DURATION=22;
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const prog=(t,a,b)=>clamp((t-a)/(b-a));
+const easeOut=x=>1-Math.pow(1-x,3), easeInOut=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const back=x=>{const c1=1.4,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const fade=(t,a,b,inD=.45,outD=.45)=>Math.min(easeOut(prog(t,a,a+inD)),1-easeOut(prog(t,b-outD,b)));
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+function set(el,o,tr){el.style.opacity=o;el.style.transform=tr||'none';el.style.visibility=o<=0.001?'hidden':'visible'}
+
+window.render=function(t){
+  // 1. логотип
+  const [a1,b1]=T.s1; set($('#s1'),fade(t,a1,b1,.01,.4));
+  const m=easeOut(prog(t,.1,1.1)); $('#mark').style.transform=`scale(${.8+.2*m})`;$('#mark').style.opacity=m;
+  $('#s1 .t1').style.opacity=easeOut(prog(t,.6,1.3));$('#s1 .t1').style.transform=`translateY(${40*(1-easeOut(prog(t,.6,1.3)))}px)`;
+  const pp=prog(t,1.2,1.8); $('#s1 .pill').style.transform=`scale(${pp?back(pp):0})`;
+  // 2. лента
+  const [a2,b2]=T.s2; set($('#s2'),fade(t,a2,b2,.5,.4));
+  $$('.col').forEach((c,i)=>{const dir=i%2?1:-1;const off=(t-a2)*95*dir+(dir>0?-900:0);c.style.transform=`translateY(${off}px)`});
+  const ov=easeOut(prog(t,a2+.6,a2+1.3)); $('#s2 .over').style.transform=`translateY(${(1-ov)*120}px)`;$('#s2 .over').style.opacity=ov;
+  // 3. товары
+  SPOT.forEach((p,i)=>{const a=T.sp[i],b=T.sp[i+1]??T.sp[i]+2.4;const el=$('#sp'+i);
+    const inP=easeOut(prog(t,a,a+.7)), outP=easeInOut(prog(t,b-.35,b+.2));
+    set(el,Math.min(inP,1-outP*.999)>0?1:0);
+    const card=el.querySelector('.card');const rot=(i%2?5:-5)*(1-inP)+(i%2?-1.5:1.5);
+    card.style.transform=`translateX(${(1-inP)*1100-outP*1200}px) rotate(${rot}deg) scale(${1+.04*prog(t,a,b)})`;
+    card.querySelector('img').style.transform=`scale(${1.06-.06*prog(t,a,b)})`;
+    const info=el.querySelector('.info');info.style.opacity=easeOut(prog(t,a+.35,a+.9))*(1-outP);info.style.transform=`translateY(${(1-easeOut(prog(t,a+.35,a+.9)))*60}px)`;
+    el.querySelectorAll('.chip').forEach((c,j)=>{const cp=prog(t,a+.6+j*.15,a+1.05+j*.15);c.style.transform=`scale(${cp?back(cp):0})`});
+  });
+  // 4. преимущества
+  const [a4,b4]=T.s4; set($('#s4'),fade(t,a4,b4,.4,.4));
+  $('#s4 h2').style.transform=`translateY(${(1-easeOut(prog(t,a4,a4+.6)))*60}px)`;
+  $$('#s4 .row').forEach((r,i)=>{const rp=easeOut(prog(t,a4+.4+i*.35,a4+.95+i*.35));r.style.opacity=rp;r.style.transform=`translateX(${(1-rp)*-700}px)`});
+  // 5. контакты
+  const [a5]=T.s5; const f5=easeOut(prog(t,a5,a5+.6)); set($('#s5'),f5);
+  $('#s5 img').style.transform=`scale(${.85+.15*f5})`;
+  const ph=prog(t,a5+.5,a5+1.1); $('#phone').style.transform=`scale(${ph?back(ph):0})`;
+  $('#s5 .sub').style.opacity=easeOut(prog(t,a5+.9,a5+1.5));$('#s5 .addr').style.opacity=easeOut(prog(t,a5+1.1,a5+1.7));
+  const pulse=t>a5+1.6?1+.025*Math.sin((t-a5)*5):1; if(ph>=1)$('#phone').style.transform=`scale(${pulse})`;
+};
+window.DURATION=DURATION;
+window.ready=Promise.all([document.fonts.ready,...[...document.images].map(i=>i.decode?i.decode().catch(()=>{}):0)]);
+render(0);
+if(!q.has('frame')){const t0=performance.now();(function loop(){render(((performance.now()-t0)/1000)%DURATION);requestAnimationFrame(loop)})()}
+</script></body></html>
