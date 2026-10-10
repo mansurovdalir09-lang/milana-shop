@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#F5EDE3">
+<meta name="robots" content="noindex">
+<title>Milana — хлопок из Узбекистана</title>
+<meta name="description" content="Пижамы, сорочки, туники и халаты из хлопка. Опт упаковками и розница, доставка по России.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<!--
+  Мини-приложение Milana. Один код для трёх сред:
+  • Telegram Mini App (telegram-web-app.js)  • MAX (max-web-app.js)  • обычный браузер.
+  Заказ без формы и без сервера: собирается текстом и открывается в чате менеджера.
+
+  Решение по дизайну (правило непохожести):
+  1. Сфера и эмоция: домашняя одежда из хлопка → тепло, мягкость, «натурально и недорого».
+  2. Цвет из бренда Milana: беж #C4956A + оливковый #5C6E50 с сайта; красный #C44049 — из уголка логотипа, только точечно.
+  3. Шрифты бренда: Cormorant Garamond (заголовки) + Jost (текст), как на сайте — это один бренд.
+  От Fly взята только структура (загрузка, плашки, большая карточка, плавающее меню), не цвет и не стиль.
+-->
+<style>
+:root{
+  --bg:#F5EDE3; --bg-2:#EFE4D7; --card:#FBF7F2; --line:rgba(26,20,16,.08);
+  --beige:#C4956A; --beige-light:#E8D5C0; --beige-deep:#A87A52;
+  --green:#5C6E50; --green-dark:#3D4A35; --green-soft:#E3E8DC;
+  --red:#C44049; --dark:#1A1410; --muted:#7A6B5E; --white:#FFFDFB;
+  --r-xl:32px; --r-lg:24px; --r-md:18px; --r-sm:12px;
+  --shadow:0 10px 30px -12px rgba(61,45,30,.28);
+  --shadow-soft:0 4px 16px -8px rgba(61,45,30,.22);
+  --safe-top:calc(var(--tg-safe-area-inset-top,0px) + var(--tg-content-safe-area-inset-top,0px) + env(safe-area-inset-top,0px));
+  --safe-bottom:calc(var(--tg-safe-area-inset-bottom,0px) + env(safe-area-inset-bottom,0px));
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Jost',-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--dark);font-family:var(--sans);font-size:16px;line-height:1.4;overscroll-behavior:none}
+body{min-height:100vh;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input{font:inherit;color:inherit}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ───────── Загрузка (как у Fly: иконка, слово, полоска) ───────── */
+.loader{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  background:radial-gradient(60% 40% at 50% 46%,#EBD7C1 0%,rgba(235,215,193,0) 70%),radial-gradient(50% 35% at 70% 80%,#E9DDD0 0%,rgba(233,221,208,0) 70%),var(--bg);
+  transition:opacity .45s ease,visibility .45s}
+.loader.hide{opacity:0;visibility:hidden}
+.loader__icon{width:104px;height:104px;border-radius:30px;display:grid;place-items:center;background:linear-gradient(160deg,#FFFDFB,#F1E6DA);
+  border:1px solid rgba(196,149,106,.45);box-shadow:0 18px 40px -16px rgba(168,122,82,.55),inset 0 1px 0 #fff}
+.loader__icon img{width:70px}
+.loader__word{font-family:var(--sans);font-weight:500;letter-spacing:.42em;font-size:20px;margin-right:-.42em}
+.loader__bar{width:138px;height:3px;border-radius:3px;background:rgba(92,110,80,.15);overflow:hidden}
+.loader__bar i{display:block;height:100%;width:0;background:var(--green);border-radius:3px;transition:width .35s ease}
+
+/* ───────── Каркас ───────── */
+.app{padding:calc(var(--safe-top) + 12px) 16px calc(var(--safe-bottom) + 112px);max-width:560px;margin:0 auto}
+.page{display:none;animation:pageIn .35s ease both}
+.page.on{display:block}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* верхние плашки */
+.topbar{display:flex;gap:8px;align-items:center;margin-bottom:18px}
+.pill{height:44px;border-radius:22px;background:var(--card);box-shadow:var(--shadow-soft);display:flex;align-items:center;gap:8px;padding:0 14px;font-weight:500;font-size:14px;white-space:nowrap}
+.pill--user{flex:1;min-width:0;padding-left:5px}
+.pill--user .ava{width:34px;height:34px;border-radius:50%;flex:none;background:linear-gradient(135deg,var(--beige-light),var(--beige));display:grid;place-items:center;font-family:var(--serif);font-weight:600;font-size:17px;color:var(--white);overflow:hidden}
+.pill--user .ava img{width:100%;height:100%;object-fit:cover}
+.pill--user span{overflow:hidden;text-overflow:ellipsis}
+.pill--user svg{flex:none;opacity:.45}
+.seg[hidden],#chatLabel[hidden]{display:none}
+.seg{height:44px;border-radius:22px;background:var(--card);box-shadow:var(--shadow-soft);display:flex;padding:4px;flex:none}
+.seg button{border-radius:18px;padding:0 13px;font-size:14px;font-weight:500;color:var(--muted);transition:background .25s,color .25s}
+.seg button.on{background:var(--green);color:var(--white)}
+.pill--chat{flex:none;padding:0 13px}
+.pill--chat svg{color:var(--green)}
+
+/* большая карточка */
+.hero{position:relative;border-radius:var(--r-xl);padding:20px 20px 22px;overflow:hidden;display:flex;flex-direction:column;
+  background:radial-gradient(80% 55% at 50% 38%,#F6E7D6 0%,rgba(246,231,214,0) 70%),linear-gradient(170deg,#EADBC9 0%,#DFC9B1 100%);box-shadow:var(--shadow);text-align:left;width:100%}
+.tag{position:absolute;top:18px;left:18px;z-index:3;height:30px;border-radius:15px;padding:0 12px;display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,253,251,.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--green-dark)}
+.arrow{position:absolute;top:14px;right:14px;z-index:3;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:var(--white);box-shadow:0 6px 16px -6px rgba(61,74,53,.6)}
+.hero .arrow{width:48px;height:48px;background:rgba(255,253,251,.75);color:var(--green-dark);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.fan{position:relative;display:block;height:272px;margin:34px -20px 8px}
+.fan img{position:absolute;top:0;width:40%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:20px;box-shadow:0 18px 34px -14px rgba(61,45,30,.5);border:3px solid var(--white);background:var(--beige-light)}
+.fan img:nth-child(1){left:7%;top:42px;transform:rotate(-8deg)}
+.fan img:nth-child(2){left:28%;z-index:2;width:44%}
+.fan img:nth-child(3){right:7%;top:42px;transform:rotate(8deg)}
+.hero h1{position:relative;z-index:2;font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.02;letter-spacing:-.01em}
+.hero p{position:relative;z-index:2;margin-top:8px;color:#5A4A3D;font-size:15px;max-width:30ch}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.tile{position:relative;border-radius:var(--r-xl);background:var(--card);box-shadow:var(--shadow-soft);padding:16px;display:flex;flex-direction:column;overflow:hidden;text-align:left}
+.tile .tag{top:14px;left:14px;background:var(--bg-2)}
+.tile .arrow{top:12px;right:12px}
+.tile__img{display:block;height:auto;margin:44px auto 14px;transform:rotate(-4deg);width:64%;aspect-ratio:3/4;object-fit:cover;border-radius:16px;border:3px solid var(--white);box-shadow:0 12px 24px -12px rgba(61,45,30,.5);background:var(--beige-light)}
+.tile:nth-child(2) .tile__img{transform:rotate(4deg)}
+.tile__t{font-family:var(--serif);font-weight:600;font-size:25px;line-height:1}
+.tile__s{position:relative;z-index:2;color:var(--muted);font-size:14px;margin-top:4px}
+
+.banner{margin-top:12px;border-radius:var(--r-xl);padding:20px;background:var(--green-dark);color:var(--white);position:relative;overflow:hidden;text-align:left;width:100%;display:block}
+.banner::after{content:"";position:absolute;right:-60px;bottom:-80px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(255,255,255,.12);box-shadow:0 0 0 30px rgba(255,255,255,.04),0 0 0 60px rgba(255,255,255,.03)}
+.banner b{display:block;font-family:var(--serif);font-weight:600;font-size:24px;line-height:1.05}
+.banner span{display:block;margin-top:6px;font-size:14px;opacity:.82;max-width:32ch}
+.banner em{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-style:normal;font-weight:500;font-size:14px;color:var(--beige-light)}
+.banner--light{background:var(--card);color:var(--dark);box-shadow:var(--shadow-soft)}
+.banner--light span{color:var(--muted);opacity:1}.banner--light em{color:var(--green)}
+.banner--light::after{border-color:rgba(196,149,106,.25);box-shadow:0 0 0 30px rgba(196,149,106,.06),0 0 0 60px rgba(196,149,106,.04)}
+
+.h2{display:flex;align-items:baseline;justify-content:space-between;margin:26px 2px 12px}
+.h2 h2{font-family:var(--serif);font-weight:600;font-size:26px}
+.h2 button{font-size:14px;color:var(--green);font-weight:500}
+.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 6px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.rail .card{flex:0 0 46%;scroll-snap-align:start}
+
+.facts{margin-top:14px;display:grid;gap:8px}
+.fact{display:flex;gap:12px;align-items:center;background:var(--card);border-radius:var(--r-md);padding:12px 14px;font-size:14px;color:#4E4036}
+.fact i{width:34px;height:34px;flex:none;border-radius:50%;background:var(--green-soft);display:grid;place-items:center;color:var(--green);font-style:normal}
+.foot{margin:22px 4px 0;font-size:12px;color:var(--muted);line-height:1.6}
+.foot a{color:var(--muted)}
+
+/* ───────── Каталог ───────── */
+.ptitle{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1;margin:6px 2px 14px;display:flex;align-items:baseline;gap:10px}
+.ptitle small{font-family:var(--sans);font-size:14px;font-weight:400;color:var(--muted)}
+.search{display:flex;align-items:center;gap:10px;height:48px;border-radius:24px;background:var(--card);box-shadow:var(--shadow-soft);padding:0 16px;margin-bottom:12px}
+.search input{flex:1;border:0;background:none;outline:none;font-size:16px;min-width:0}
+.search svg{opacity:.45;flex:none}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:0 -16px 14px;padding:0 16px 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;height:38px;border-radius:19px;padding:0 15px;background:var(--card);font-size:14px;font-weight:500;color:#5A4A3D;border:1px solid var(--line);transition:all .2s}
+.chip.on{background:var(--dark);color:var(--white);border-color:var(--dark)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 12px}
+.card{text-align:left;display:block;width:100%}
+.card__img{position:relative;aspect-ratio:3/4;border-radius:var(--r-lg);overflow:hidden;background:var(--beige-light)}
+.card__img img{width:100%;height:100%;object-fit:cover}
+.badge{position:absolute;top:10px;left:10px;height:24px;padding:0 10px;border-radius:12px;background:var(--red);color:#fff;font-size:12px;font-weight:500;display:flex;align-items:center}
+.add{position:absolute;right:8px;bottom:8px;width:40px;height:40px;border-radius:50%;background:var(--white);color:var(--green-dark);display:grid;place-items:center;box-shadow:0 6px 14px -6px rgba(26,20,16,.45);transition:transform .2s}
+.add:active{transform:scale(.9)}
+.card__b{padding:9px 4px 0}
+.card__brand{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--beige-deep);font-weight:600}
+.card__name{font-size:14px;line-height:1.3;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
+.card__price{margin-top:5px;font-weight:600;font-size:16px;color:var(--green-dark)}
+.card__sub{font-size:12px;color:var(--muted)}
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}
+.empty b{display:block;font-family:var(--serif);font-size:26px;color:var(--dark);margin-bottom:6px}
+.btn{height:54px;border-radius:27px;background:var(--green);color:var(--white);font-weight:500;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;transition:transform .15s,opacity .2s}
+.btn:active{transform:scale(.98)}
+.btn[disabled]{opacity:.45}
+.btn--ghost{background:var(--card);color:var(--dark);border:1px solid var(--line)}
+.btn--sm{height:44px;width:auto;padding:0 20px;display:inline-flex;margin-top:16px}
+
+/* ───────── Корзина ───────── */
+.line{display:grid;grid-template-columns:72px 1fr;gap:12px;background:var(--card);border-radius:var(--r-lg);padding:10px;margin-bottom:10px;position:relative}
+.line img{width:72px;height:96px;object-fit:cover;border-radius:14px;background:var(--beige-light)}
+.line__n{font-size:14px;line-height:1.3;padding-right:26px}
+.line__m{font-size:12px;color:var(--muted);margin-top:3px}
+.line__row{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.line__sum{font-weight:600;color:var(--green-dark)}
+.line__x{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:var(--muted)}
+.step{display:flex;align-items:center;background:var(--bg);border-radius:18px;height:36px}
+.step button{width:36px;height:36px;display:grid;place-items:center;font-size:20px;color:var(--green-dark)}
+.step b{min-width:22px;text-align:center;font-weight:500;font-size:15px}
+.mtag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:7px;background:var(--green-soft);color:var(--green-dark);margin-right:4px}
+.mtag--r{background:#F6E2D5;color:#8A4B2B}
+.box{background:var(--card);border-radius:var(--r-lg);padding:16px;margin-top:6px}
+.box h3{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.row{display:flex;justify-content:space-between;font-size:15px;padding:4px 0}
+.row--t{font-size:19px;font-weight:600;border-top:1px dashed rgba(26,20,16,.15);margin-top:8px;padding-top:12px}
+.row span:last-child{text-align:right}
+.muted{color:var(--muted)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#4E4036;margin-top:14px;line-height:1.45;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--green);flex:none;margin-top:1px}
+.legal{font-size:12px;color:var(--muted);margin:12px 4px 14px;line-height:1.5}
+.legal a{color:var(--green-dark)}
+
+/* ───────── Нижнее меню ───────── */
+.tabbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--safe-bottom) + 14px);z-index:40;width:min(calc(100% - 32px),528px);height:72px;border-radius:36px;
+  display:grid;grid-template-columns:1fr 1.15fr 1fr;align-items:center;padding:6px;background:rgba(251,247,242,.82);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);
+  box-shadow:0 14px 34px -14px rgba(61,45,30,.45),inset 0 0 0 1px rgba(255,255,255,.6)}
+.tab{height:60px;border-radius:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:500;color:var(--muted);position:relative;transition:background .25s,color .25s}
+.tab.on{color:var(--green-dark)}
+.tab--home{background:rgba(196,149,106,.14)}
+.tab--home.on{background:rgba(196,149,106,.26)}
+.tab--home img{width:46px;height:auto}
+.tab .cnt{position:absolute;top:6px;left:calc(50% + 6px);min-width:19px;height:19px;padding:0 5px;border-radius:10px;background:var(--red);color:#fff;font-size:11px;display:none;align-items:center;justify-content:center}
+.tab .cnt.show{display:flex;animation:pop .35s ease}
+@keyframes pop{50%{transform:scale(1.35)}}
+
+/* ───────── Листы ───────── */
+.veil{position:fixed;inset:0;z-index:60;background:rgba(26,20,16,.38);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.veil.on{opacity:1;visibility:visible}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:70;max-width:560px;margin:0 auto;max-height:calc(100vh - var(--safe-top) - 24px);overflow-y:auto;overscroll-behavior:contain;
+  background:var(--bg);border-radius:28px 28px 0 0;padding:10px 16px calc(var(--safe-bottom) + 20px);transform:translateY(105%);transition:transform .38s cubic-bezier(.2,.8,.2,1)}
+.sheet.on{transform:none}
+.grab{width:40px;height:5px;border-radius:3px;background:rgba(26,20,16,.18);margin:0 auto 12px}
+.sheet__close{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;background:var(--card);display:grid;place-items:center;z-index:2}
+.pimg{border-radius:var(--r-lg);overflow:hidden;background:var(--beige-light);height:min(52vh,460px)}
+.pimg img{width:100%;height:100%;object-fit:contain}
+.pname{font-family:var(--serif);font-weight:600;font-size:28px;line-height:1.05;margin-top:14px}
+.pprice{display:flex;align-items:baseline;gap:10px;margin-top:8px}
+.pprice b{font-size:24px;color:var(--green-dark)}
+.pprice span{color:var(--muted);font-size:14px}
+.pnote{font-size:14px;color:#5A4A3D;margin-top:6px}
+.sizes{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.size{min-width:48px;height:42px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-weight:500}
+.size.on{background:var(--dark);color:var(--white);border-color:var(--dark)}
+.label{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:16px}
+.buyrow{display:flex;gap:10px;align-items:center;margin-top:18px}
+.buyrow .step{height:54px;border-radius:27px;background:var(--card)}
+.buyrow .step button{width:46px;height:54px}
+.info a,.info button.lnk{display:flex;justify-content:space-between;align-items:center;width:100%;padding:14px 4px;border-bottom:1px solid var(--line);text-decoration:none;font-size:15px;text-align:left}
+.info p{font-size:14px;color:#4E4036;margin:6px 0 10px}
+.okmark{width:76px;height:76px;margin:10px auto 4px}
+.okmark circle{stroke-dasharray:226;stroke-dashoffset:226;animation:draw .7s ease forwards}
+.okmark path{stroke-dasharray:60;stroke-dashoffset:60;animation:draw .45s .55s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.order-text{white-space:pre-wrap;font-size:13px;background:var(--card);border-radius:var(--r-md);padding:12px;margin-top:12px;max-height:200px;overflow:auto;font-family:var(--sans);color:#4E4036}
+.center{text-align:center}
+.stack{display:grid;gap:10px;margin-top:14px}
+
+.toast{position:fixed;left:50%;top:calc(var(--safe-top) + 12px);transform:translate(-50%,-140%);z-index:90;background:var(--dark);color:var(--white);padding:11px 18px;border-radius:22px;font-size:14px;transition:transform .35s cubic-bezier(.2,.8,.2,1);white-space:nowrap}
+.toast.on{transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+@media (min-width:480px){.fan{height:340px}}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__icon"><img src="mark.svg" alt=""></div>
+  <div class="loader__word">MILANA</div>
+  <div class="loader__bar"><i id="loaderBar"></i></div>
+</div>
+
+<main class="app" id="app">
+
+  <!-- ГЛАВНАЯ -->
+  <section class="page on" id="page-home" aria-label="Главная">
+    <div class="topbar">
+      <button class="pill pill--user" data-act="info" aria-label="Профиль и информация">
+        <span class="ava" id="ava">M</span><span id="hello">Профиль</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg>
+      </button>
+      <div class="seg" id="modeSeg" role="group" aria-label="Тип покупки">
+        <button data-mode="opt">Опт</button><button data-mode="retail">Розница</button>
+      </div>
+      <button class="pill pill--chat" data-act="chat" aria-label="Написать менеджеру">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13" width="5" height="7" rx="2"/><rect x="16.5" y="13" width="5" height="7" rx="2"/></svg><span id="chatLabel" hidden>Менеджер</span>
+      </button>
+    </div>
+
+    <button class="hero" data-go="catalog" data-cat="Все">
+      <span class="tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/></svg>Опт · от 1 упаковки</span>
+      <span class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+      <span class="fan" id="fan"></span>
+      <h1>Хлопок из&nbsp;Узбекистана</h1>
+      <p id="heroSub">Пижамы, сорочки, туники и&nbsp;халаты упаковками по&nbsp;3–6&nbsp;шт, в&nbsp;каждой — размерный ряд.</p>
+    </button>
+
+    <div class="grid2" id="tiles"></div>
+
+    <button class="banner" data-mode-switch="opt" id="bannerOpt">
+      <b>Покупаете для магазина?</b>
+      <span>Цена за&nbsp;упаковку, в&nbsp;каждой — размерный ряд. Отгрузка в&nbsp;течение 24&nbsp;часов после оплаты.</span>
+      <em>Включить оптовые цены →</em>
+    </button>
+
+    <div class="h2"><h2>Хиты</h2><button data-go="catalog" data-cat="Все">Все товары</button></div>
+    <div class="rail" id="rail"></div>
+
+    <button class="banner banner--light" data-act="share">
+      <b>Поделиться магазином</b>
+      <span id="shareText">Отправьте ссылку знакомым продавцам — менеджер увидит, от&nbsp;кого пришёл заказ.</span>
+      <em>Отправить ссылку →</em>
+    </button>
+
+    <div class="facts">
+      <div class="fact"><i>🚚</i><span>Доставка по&nbsp;России: СДЭК и&nbsp;Почта России. Стоимость считает менеджер.</span></div>
+      <div class="fact"><i>📍</i><span>Самовывоз: Новосибирск, ТК «Восток», ул.&nbsp;Дегтярёва, 19, ряд 19, места 61–63.</span></div>
+    </div>
+    <p class="foot" id="foot"></p>
+  </section>
+
+  <!-- КАТАЛОГ -->
+  <section class="page" id="page-catalog" aria-label="Каталог">
+    <h1 class="ptitle">Каталог <small id="count"></small></h1>
+    <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="sr">Поиск</span><input id="q" type="search" placeholder="Поиск: туника, халат, Baror…" autocomplete="off" enterkeyhint="search"></label>
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- КОРЗИНА -->
+  <section class="page" id="page-cart" aria-label="Корзина">
+    <h1 class="ptitle">Корзина <small id="cartCount"></small></h1>
+    <div id="cartBody"></div>
+  </section>
+</main>
+
+<nav class="tabbar" aria-label="Разделы">
+  <button class="tab" data-go="catalog" data-tab="catalog">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg>Каталог</button>
+  <button class="tab tab--home on" data-go="home" data-tab="home" aria-label="Главная"><img src="logo.svg" alt="Milana"></button>
+  <button class="tab" data-go="cart" data-tab="cart">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg>Корзина<span class="cnt" id="cnt"></span></button>
+</nav>
+
+<div class="veil" id="veil" data-act="close"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true"><div class="grab"></div>
+  <button class="sheet__close" data-act="close" aria-label="Закрыть"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <div id="sheetBody"></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="data.js"></script>
+<script>
+/* ═════════════ НАСТРОЙКИ — заполнить перед запуском ═════════════ */
+const CONFIG = {
+  MANAGER_TG: '',                 // username менеджера в Telegram без @ (например 'milana_opt'). Пока пусто — откроется чат по номеру телефона.
+  MANAGER_PHONE: '79538906664',   // номер для чата по телефону и звонка
+  MANAGER_MAX_URL: '',            // ссылка на чат менеджера в MAX
+  APP_LINK_TG: '',                // прямая ссылка на мини-апп: https://t.me/<бот>/<имя_приложения> — нужна для «Поделиться»
+  CHANNEL_TG: '',                 // ссылка на канал, например https://t.me/milana_nsk
+  RETAIL_ENABLED: false,          // розница выключена: включить true, когда будут отобраны открытые модели и размеры
+  RETAIL_MARKUP: 1.6,             // ВРЕМЕННО: розница = опт за шт × 1.6, округление до …90 ₽. Замените своими ценами (поле retail в data.js).
+  HIDE_IDS: [1,2,3,4,5,6,7,8,9,10,11,12,13,14], // старые карточки с чужими фото (дубли 101–116) — скрыты, пока не исправлены
+  HERO_IDS: [131,141,120],        // фото на большой карточке
+  TILES: [{cat:'Пижамы',id:126},{cat:'Халаты',id:47}],
+  SELLER: 'ИП [ФИО], ИНН [ИНН], ОГРНИП [ОГРНИП]', // реквизиты продавца — показываются в подвале и в документах
+};
+/* ═══════════════════════════════════════════════════════════════ */
+
+const ALL = (window.MILANA_PRODUCTS||[]).filter(p=>!CONFIG.HIDE_IDS.includes(p.id))
+  .sort((a,b)=>(b.brand==='Milana')-(a.brand==='Milana')); // своя марка — первой
+const byId = id => ALL.find(p=>p.id===id) || (window.MILANA_PRODUCTS||[]).find(p=>p.id===id);
+const CATS = ['Все','Пижамы','Сорочки','Туники','Халаты','Комплекты','Лифчики','Прочее'].filter(c=>c==='Все'||ALL.some(p=>p.cat===c));
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rub = n=>Math.round(n).toLocaleString('ru-RU')+' ₽';
+const retail = p=>p.retail || Math.ceil(p.opt*CONFIG.RETAIL_MARKUP/100)*100-10;
+const plural=(n,a,b,c)=>{n=Math.abs(n)%100;const m=n%10;return n>10&&n<20?c:m>1&&m<5?b:m===1?a:c};
+
+/* хранилище: localStorage может быть недоступен — работаем и без него */
+const store={get(k,d){try{const v=localStorage.getItem('milana-app-'+k);return v?JSON.parse(v):d}catch(e){return d}},
+             set(k,v){try{localStorage.setItem('milana-app-'+k,JSON.stringify(v))}catch(e){}}};
+
+const state={page:'home',mode:CONFIG.RETAIL_ENABLED?store.get('mode','opt'):'opt',cat:'Все',q:'',
+  cart:store.get('cart',[]).filter(i=>byId(i.id)&&(CONFIG.RETAIL_ENABLED||i.mode==='opt')),delivery:store.get('delivery','СДЭК'),ads:false,sheet:null,lastOrder:null};
+
+/* ═════════════ Платформа: Telegram / MAX / браузер ═════════════ */
+const Pf={kind:'web',api:null,user:null,start:''};
+function loadScript(src,ms){return new Promise(res=>{const s=document.createElement('script');s.src=src;s.async=true;
+  const t=setTimeout(()=>res(false),ms);s.onload=()=>{clearTimeout(t);res(true)};s.onerror=()=>{clearTimeout(t);res(false)};document.head.appendChild(s)})}
+async function initPlatform(){
+  const inTg=/tgWebApp/i.test(location.hash+location.search);
+  if(inTg) await loadScript('https://telegram.org/js/telegram-web-app.js',3000);
+  const tg=window.Telegram&&window.Telegram.WebApp;
+  if(tg&&tg.initData){
+    Pf.kind='tg';Pf.api=tg;Pf.user=tg.initDataUnsafe&&tg.initDataUnsafe.user;Pf.start=(tg.initDataUnsafe&&tg.initDataUnsafe.start_param)||'';
+    try{tg.ready();tg.expand()}catch(e){}
+    const v=x=>{try{return tg.isVersionAtLeast(x)}catch(e){return false}};
+    try{if(v('8.0')&&['ios','android'].includes(tg.platform))tg.requestFullscreen()}catch(e){}
+    try{if(v('7.7'))tg.disableVerticalSwipes()}catch(e){}
+    try{tg.setHeaderColor('#F5EDE3');tg.setBackgroundColor('#F5EDE3');if(v('7.10'))tg.setBottomBarColor('#F5EDE3')}catch(e){}
+    try{tg.BackButton.onClick(goBack)}catch(e){}
+    return;
+  }
+  if(!inTg){
+    await loadScript('https://st.max.ru/js/max-web-app.js',2500);
+    const m=window.WebApp;
+    if(m&&m.initData){
+      Pf.kind='max';Pf.api=m;Pf.user=m.initDataUnsafe&&m.initDataUnsafe.user;Pf.start=(m.initDataUnsafe&&m.initDataUnsafe.start_param)||'';
+      try{m.ready&&m.ready()}catch(e){}
+      try{m.BackButton.onClick(goBack)}catch(e){}
+    }
+  }
+  if(Pf.kind==='web'){const sp=new URLSearchParams(location.search);Pf.start=sp.get('start')||''}
+}
+const haptic=(t='light')=>{try{Pf.api&&Pf.api.HapticFeedback&&Pf.api.HapticFeedback.impactOccurred(t)}catch(e){}};
+const hapticOk=()=>{try{Pf.api&&Pf.api.HapticFeedback&&Pf.api.HapticFeedback.notificationOccurred('success')}catch(e){}};
+function backBtn(show){try{const b=Pf.api&&Pf.api.BackButton;if(b)show?b.show():b.hide()}catch(e){}}
+function closingGuard(){try{if(Pf.kind!=='tg')return;state.cart.length?Pf.api.enableClosingConfirmation():Pf.api.disableClosingConfirmation()}catch(e){}}
+function openLink(url){
+  try{
+    if(Pf.kind==='tg'){ /^https:\/\/t\.me\//.test(url)?Pf.api.openTelegramLink(url):Pf.api.openLink(url); return }
+    if(Pf.kind==='max'){ /^https:\/\/max\.ru\//.test(url)&&Pf.api.openMaxLink?Pf.api.openMaxLink(url):Pf.api.openLink(url); return }
+  }catch(e){}
+  window.open(url,'_blank','noopener');
+}
+
+/* ═════════════ Навигация ═════════════ */
+function go(page,opts={}){
+  if(opts.cat){state.cat=opts.cat;renderCatalog()}
+  state.page=page;
+  document.querySelectorAll('.page').forEach(s=>s.classList.toggle('on',s.id==='page-'+page));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.tab===page));
+  if(page==='cart')renderCart();
+  window.scrollTo(0,0);syncBack();
+}
+function goBack(){ if(state.sheet){closeSheet();return} if(state.page!=='home'){go('home')} }
+function syncBack(){backBtn(!!state.sheet||state.page!=='home')}
+
+/* ═════════════ Отрисовка ═════════════ */
+const img=(p,cls='')=>`<img ${cls?`class="${cls}"`:''} src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy" decoding="async" width="600" height="800">`;
+function priceHTML(p){
+  return state.mode==='opt'
+    ? `<div class="card__price">${rub(p.packPrice)} / уп.</div><div class="card__sub">${p.pack} шт × ${rub(p.opt)}</div>`
+    : `<div class="card__price">${rub(retail(p))}</div><div class="card__sub">${p.sizes?'Размеры '+esc(p.sizes):'Единый размер'}</div>`;
+}
+function cardHTML(p){
+  return `<div class="card" role="button" tabindex="0" data-open="${p.id}">
+    <div class="card__img">${p.badge?`<span class="badge">${esc(p.badge)}</span>`:''}${img(p)}
+      <button class="add" data-quick="${p.id}" aria-label="В корзину"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></button></div>
+    <div class="card__b"><div class="card__brand">${esc(p.brand)}</div><div class="card__name">${esc(p.name)}</div>${priceHTML(p)}</div></div>`;
+}
+function renderHome(){
+  $('#fan').innerHTML=CONFIG.HERO_IDS.map(byId).filter(Boolean).map(p=>img(p)).join('');
+  $('#tiles').innerHTML=CONFIG.TILES.map(t=>{const p=byId(t.id);const n=ALL.filter(x=>x.cat===t.cat).length;
+    return `<button class="tile" data-go="catalog" data-cat="${esc(t.cat)}">
+      <span class="tag">${esc(t.cat)}</span>
+      <span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+      ${p?img(p,'tile__img'):''}<span class="tile__t">${esc(t.cat)}</span><span class="tile__s">${n} ${plural(n,'модель','модели','моделей')}</span></button>`}).join('');
+  const hits=[...ALL.filter(p=>p.brand==="Milana").slice(0,6),...ALL.filter(p=>p.badge)].slice(0,10);
+  $('#rail').innerHTML=hits.map(cardHTML).join('');
+  $('#bannerOpt').style.display=(CONFIG.RETAIL_ENABLED&&state.mode==='opt')?'none':'';
+  if(!CONFIG.RETAIL_ENABLED)$('#bannerOpt em').textContent='Открыть каталог →';
+  $('#foot').innerHTML=`${esc(CONFIG.SELLER)}<br><a href="legal/oferta.html">Публичная оферта</a> · <a href="legal/privacy.html">Политика обработки персональных данных</a>`;
+}
+function renderChips(){
+  $('#chips').innerHTML=CATS.map(c=>`<button class="chip ${c===state.cat?'on':''}" data-chip="${esc(c)}">${esc(c)}</button>`).join('');
+}
+function renderCatalog(){
+  renderChips();
+  const q=state.q.trim().toLowerCase();
+  const list=ALL.filter(p=>(state.cat==='Все'||p.cat===state.cat)&&(!q||(p.name+' '+p.brand+' '+p.cat).toLowerCase().includes(q)));
+  $('#count').textContent=list.length+' '+plural(list.length,'товар','товара','товаров');
+  $('#grid').innerHTML=list.length?list.map(cardHTML).join(''):`<div class="empty" style="grid-column:1/-1"><b>Ничего не нашли</b>Попробуйте другое слово или категорию</div>`;
+}
+function refreshPrices(){renderHome();renderCatalog();if(state.page==='cart')renderCart()}
+
+/* ═════════════ Корзина ═════════════ */
+const lineKey=(id,mode,size)=>id+'|'+mode+'|'+(size||'');
+const linePrice=i=>{const p=byId(i.id);return i.mode==='opt'?p.packPrice:retail(p)};
+const total=()=>state.cart.reduce((s,i)=>s+linePrice(i)*i.qty,0);
+function saveCart(){store.set('cart',state.cart);updateBadge();closingGuard()}
+function updateBadge(){const n=state.cart.reduce((s,i)=>s+i.qty,0);const c=$('#cnt');c.textContent=n;c.classList.remove('show');void c.offsetWidth;c.classList.toggle('show',n>0)}
+function addToCart(id,mode,size,qty=1){
+  const k=lineKey(id,mode,size);const ex=state.cart.find(i=>i.key===k);
+  if(ex)ex.qty=Math.min(99,ex.qty+qty);else state.cart.push({key:k,id,mode,size:size||'',qty});
+  saveCart();haptic('medium');toast(mode==='opt'?'Упаковка в корзине':'Добавлено в корзину');
+}
+function sizesOf(p){
+  const s=(p.sizes||'').trim();const m=s.match(/^(\d{2})\s*[-–]\s*(\d{2})$/);
+  if(m){const a=+m[1],b=+m[2],r=[];for(let x=a;x<=b;x+=2)r.push(String(x));return r}
+  return s?s.split(/[,/;]\s*/).filter(Boolean):[];
+}
+function renderCart(){
+  const n=state.cart.reduce((s,i)=>s+i.qty,0);
+  $('#cartCount').textContent=n?n+' '+plural(n,'позиция','позиции','позиций'):'';
+  if(!state.cart.length){$('#cartBody').innerHTML=`<div class="empty"><b>Пока пусто</b>Добавьте пижаму, тунику или халат из каталога<br><button class="btn btn--sm" data-go="catalog" data-cat="Все">Открыть каталог</button></div>`;return}
+  const where={tg:'в Telegram',max:'в MAX',web:'менеджеру'}[Pf.kind];
+  $('#cartBody').innerHTML=state.cart.map(i=>{const p=byId(i.id);
+    const meta=i.mode==='opt'?`<span class="mtag">Опт</span>${p.pack} шт в упаковке${p.sizes?', р. '+esc(p.sizes):''}`:`<span class="mtag mtag--r">Розница</span>${i.size?'размер '+esc(i.size):'единый размер'}`;
+    return `<div class="line">${img(p)}<div><div class="line__n">${esc(p.name)}</div><div class="line__m">${meta}</div>
+      <div class="line__row"><div class="step"><button data-dec="${esc(i.key)}" aria-label="Меньше">−</button><b>${i.qty}</b><button data-inc="${esc(i.key)}" aria-label="Больше">+</button></div>
+      <span class="line__sum">${rub(linePrice(i)*i.qty)}</span></div></div>
+      <button class="line__x" data-del="${esc(i.key)}" aria-label="Удалить"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>`}).join('')+
+  `<div class="box"><h3>Получение</h3><div class="opts">${['Самовывоз','СДЭК','Почта России'].map(d=>`<button class="chip ${d===state.delivery?'on':''}" data-deliv="${d}">${d}</button>`).join('')}</div>
+     <p class="muted" style="font-size:13px;margin-top:10px">${state.delivery==='Самовывоз'?'ТК «Восток», Новосибирск. Время согласуем в чате.':'Город и адрес напишете менеджеру в чате, он посчитает доставку.'}</p></div>
+   <div class="box"><div class="row"><span class="muted">Товары</span><span>${rub(total())}</span></div>
+     <div class="row"><span class="muted">Доставка</span><span>${state.delivery==='Самовывоз'?'бесплатно':'по тарифу перевозчика'}</span></div>
+     <div class="row row--t"><span>Итого</span><span>${rub(total())}</span></div>
+     <label class="check"><input type="checkbox" id="ads" ${state.ads?'checked':''}><span>Хочу получать подборки и скидки от Milana в мессенджере. <a href="legal/consent-ads.html">Согласие на рассылку</a></span></label></div>
+   <p class="legal">Нажимая кнопку, вы откроете чат с менеджером: заказ уже будет вписан в сообщение, останется отправить. Отправляя заказ, вы принимаете <a href="legal/oferta.html">публичную оферту</a>. Как мы обращаемся с данными — в <a href="legal/privacy.html">политике</a>.</p>
+   <button class="btn" data-act="order"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 4.3 2.9 11.4c-1.3.5-1.2 1.3-.2 1.6l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.4-1.1z"/></svg>Оформить заказ ${where}</button>`;
+}
+
+/* ═════════════ Заказ: текст → чат менеджера ═════════════ */
+function orderText(no){
+  const lines=[];const opt=state.cart.filter(i=>i.mode==='opt'),ret=state.cart.filter(i=>i.mode==='retail');let k=1;
+  lines.push(`Здравствуйте! Заказ ${no} из мини-приложения Milana`);
+  if(opt.length){lines.push('','ОПТ:');opt.forEach(i=>{const p=byId(i.id);lines.push(`${k++}. ${p.name} (арт. ${p.id}) — ${i.qty} уп. × ${p.pack} шт = ${rub(p.packPrice*i.qty)}`)})}
+  if(ret.length){lines.push('','РОЗНИЦА:');ret.forEach(i=>{const p=byId(i.id);lines.push(`${k++}. ${p.name} (арт. ${p.id})${i.size?', р. '+i.size:''} — ${i.qty} шт = ${rub(retail(p)*i.qty)}`)})}
+  lines.push('',`Итого: ${rub(total())} без доставки`,`Получение: ${state.delivery}`);
+  if(state.delivery!=='Самовывоз')lines.push('Город и адрес: ');
+  lines.push(`Подборки и скидки: ${state.ads?'да, согласна(ен) получать':'нет'}`);
+  const ref=(Pf.start.match(/r(\d+)/)||[])[1];if(ref)lines.push(`По ссылке от: ${ref}`);
+  return lines.join('\n');
+}
+function managerUrl(text){
+  if(Pf.kind==='max'&&CONFIG.MANAGER_MAX_URL)return CONFIG.MANAGER_MAX_URL;
+  if(CONFIG.MANAGER_TG)return `https://t.me/${CONFIG.MANAGER_TG}?text=${encodeURIComponent(text)}`;
+  return `https://t.me/+${CONFIG.MANAGER_PHONE}`;
+}
+const textPrefilled=()=>!!CONFIG.MANAGER_TG&&!(Pf.kind==='max'&&CONFIG.MANAGER_MAX_URL);
+function placeOrder(){
+  if(!state.cart.length)return;
+  const no='M-'+Date.now().toString(36).slice(-5).toUpperCase();
+  const text=orderText(no);state.lastOrder={no,text};
+  copy(text,true);hapticOk();
+  openLink(managerUrl(text));
+  openSheet('done');
+}
+function copy(text,silent){
+  const ok=()=>!silent&&toast('Скопировано');
+  try{if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(ok,()=>legacy());return}}catch(e){}
+  legacy();
+  function legacy(){try{const t=document.createElement('textarea');t.value=text;t.setAttribute('readonly','');t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();ok()}catch(e){}}
+}
+
+/* ═════════════ Листы: товар, инфо, готово ═════════════ */
+let sheetProduct=null,sheetSize='',sheetQty=1;
+function openSheet(kind,arg){
+  state.sheet=kind;const b=$('#sheetBody');
+  if(kind==='product'){sheetProduct=byId(arg);sheetSize='';sheetQty=1;b.innerHTML=productSheet()}
+  if(kind==='info')b.innerHTML=infoSheet();
+  if(kind==='done')b.innerHTML=doneSheet();
+  $('#sheet').scrollTop=0;$('#veil').classList.add('on');$('#sheet').classList.add('on');syncBack();
+}
+function closeSheet(){state.sheet=null;$('#veil').classList.remove('on');$('#sheet').classList.remove('on');syncBack()}
+function productSheet(){
+  const p=sheetProduct,sz=sizesOf(p),opt=state.mode==='opt';
+  return `<div class="pimg">${img(p)}</div>
+   <div class="card__brand" style="margin-top:14px">${esc(p.brand)} · ${esc(p.cat)} · арт. ${p.id}</div>
+   <h2 class="pname">${esc(p.name)}</h2>
+   ${CONFIG.RETAIL_ENABLED?`<div class="seg" style="margin-top:14px;display:inline-flex" role="group" aria-label="Тип покупки"><button data-mode="opt" class="${opt?'on':''}">Опт</button><button data-mode="retail" class="${opt?'':'on'}">Розница</button></div>`:''}
+   ${opt
+     ?`<div class="pprice"><b>${rub(p.packPrice)}</b><span>за упаковку · ${p.pack} шт × ${rub(p.opt)}</span></div>
+       <p class="pnote">В упаковке размерный ряд${p.sizes?' '+esc(p.sizes):''}${p.minOrder?'. Минимальный заказ '+esc(p.minOrder):''}. Цвета и принты в упаковке могут отличаться — уточнит менеджер.</p>`
+     :`<div class="pprice"><b>${rub(retail(p))}</b><span>за 1 шт</span></div>
+       ${sz.length?`<div class="label">Размер</div><div class="sizes">${sz.map(s=>`<button class="size" data-size="${esc(s)}">${esc(s)}</button>`).join('')}</div>`:''}`}
+   <div class="buyrow"><div class="step"><button data-sq="-1" aria-label="Меньше">−</button><b id="sq">${sheetQty}</b><button data-sq="1" aria-label="Больше">+</button></div>
+     <button class="btn" data-act="addSheet" id="addSheet">${opt?'Добавить упаковку':'В корзину'}</button></div>
+   <p class="muted" style="font-size:13px;margin-top:12px">100% хлопок или хлопок с бамбуком — состав уточняйте у менеджера по артикулу.</p>`;
+}
+function infoSheet(){
+  const name=Pf.user?esc([Pf.user.first_name,Pf.user.last_name].filter(Boolean).join(' ')):'Гость';
+  return `<h2 class="pname" style="margin-top:4px">${name}</h2>
+   <div class="info">
+     <p>Milana — домашняя одежда из хлопка с фабрик Узбекистана. Продаём оптом упаковками${CONFIG.RETAIL_ENABLED?' и в розницу':''}, отгружаем по всей России.</p>
+     ${CONFIG.CHANNEL_TG?`<button class="lnk" data-link="${esc(CONFIG.CHANNEL_TG)}">Наш канал с новинками<span>→</span></button>`:''}
+     <button class="lnk" data-act="chat">Написать менеджеру<span>→</span></button>
+     <a href="tel:+${CONFIG.MANAGER_PHONE}">Позвонить: +${CONFIG.MANAGER_PHONE.replace(/(\d)(\d{3})(\d{3})(\d{2})(\d{2})/,'$1 $2 $3-$4-$5')}<span>→</span></a>
+     <button class="lnk" data-act="share">Поделиться магазином<span>→</span></button>
+     <a href="legal/oferta.html">Публичная оферта<span>→</span></a>
+     <a href="legal/privacy.html">Политика обработки персональных данных<span>→</span></a>
+     <a href="legal/consent-ads.html">Согласие на рекламную рассылку<span>→</span></a>
+     <p style="margin-top:14px;font-size:12px" class="muted">${esc(CONFIG.SELLER)}<br>Новосибирск, ТК «Восток», ул. Дегтярёва, 19, ряд 19, места 61–63</p>
+   </div>`;
+}
+function doneSheet(){
+  const o=state.lastOrder;const pre=textPrefilled();
+  return `<svg class="okmark" viewBox="0 0 80 80" fill="none" stroke="#5C6E50" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="40" cy="40" r="36"/><path d="M25 41l10 10 20-22"/></svg>
+   <h2 class="pname center" style="margin-top:6px">Заказ ${esc(o.no)} готов</h2>
+   <p class="center muted" style="margin-top:6px;font-size:15px">${pre?'Мы открыли чат с менеджером — заказ уже в поле сообщения. Нажмите «Отправить».':'Текст заказа скопирован. В открывшемся чате вставьте его в сообщение и отправьте.'}</p>
+   <div class="order-text">${esc(o.text)}</div>
+   <div class="stack"><button class="btn" data-act="reopen">Открыть чат ещё раз</button>
+     <button class="btn btn--ghost" data-act="copyOrder">Скопировать заказ</button>
+     <button class="btn btn--ghost" data-act="finish">Готово, я отправил(а) — очистить корзину</button></div>`;
+}
+function share(){
+  const uid=Pf.user&&Pf.user.id;
+  const base=CONFIG.APP_LINK_TG||location.origin+location.pathname;
+  const link=CONFIG.APP_LINK_TG?(uid?`${base}?startapp=r${uid}`:base):(uid?`${base}?start=r${uid}`:base);
+  const text='Milana — пижамы, сорочки, туники и халаты из хлопка оптом. Упаковки с размерным рядом, доставка по России';
+  if(Pf.kind==='tg'){openLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`);return}
+  if(Pf.kind==='max'&&Pf.api.shareContent){try{Pf.api.shareContent({text,link});return}catch(e){}}
+  if(navigator.share){navigator.share({title:'Milana',text,url:link}).catch(()=>{});return}
+  copy(link);
+}
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2200)}
+
+function setMode(m){
+  if(m===state.mode)return;state.mode=m;store.set('mode',m);haptic('light');
+  document.querySelectorAll('.seg [data-mode]').forEach(b=>b.classList.toggle('on',b.dataset.mode===m));
+  refreshPrices();
+  if(state.sheet==='product'){$('#sheetBody').innerHTML=productSheet()}
+}
+
+/* ═════════════ События (делегирование, без inline-обработчиков) ═════════════ */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-act],[data-go],[data-open],[data-quick],[data-mode],[data-mode-switch],[data-chip],[data-inc],[data-dec],[data-del],[data-deliv],[data-size],[data-sq],[data-link]');
+  if(!t)return;const d=t.dataset;
+  if(d.quick){e.stopPropagation();const p=byId(+d.quick);
+    if(state.mode==='retail'&&sizesOf(p).length){openSheet('product',p.id);return}
+    addToCart(p.id,state.mode,'');t.animate&&t.animate([{transform:'scale(1)'},{transform:'scale(1.25)'},{transform:'scale(1)'}],{duration:300});return}
+  if(d.open){openSheet('product',+d.open);return}
+  if(d.go){if(state.sheet)closeSheet();go(d.go,{cat:d.cat});return}
+  if(d.mode){setMode(d.mode);return}
+  if(d.modeSwitch){if(CONFIG.RETAIL_ENABLED)setMode(d.modeSwitch);go('catalog',{cat:'Все'});return}
+  if(d.chip){state.cat=d.chip;haptic('light');renderCatalog();return}
+  if(d.inc||d.dec){const i=state.cart.find(x=>x.key===(d.inc||d.dec));if(!i)return;i.qty=Math.max(1,Math.min(99,i.qty+(d.inc?1:-1)));haptic('light');saveCart();renderCart();return}
+  if(d.del){state.cart=state.cart.filter(x=>x.key!==d.del);haptic('medium');saveCart();renderCart();return}
+  if(d.deliv){state.delivery=d.deliv;store.set('delivery',d.deliv);renderCart();return}
+  if(d.size){sheetSize=d.size;document.querySelectorAll('.size').forEach(b=>b.classList.toggle('on',b===t));haptic('light');return}
+  if(d.sq){sheetQty=Math.max(1,Math.min(99,sheetQty+(+d.sq)));$('#sq').textContent=sheetQty;return}
+  if(d.link){openLink(d.link);return}
+  switch(d.act){
+    case 'close':closeSheet();break;
+    case 'info':openSheet('info');break;
+    case 'chat':openLink(CONFIG.MANAGER_TG?`https://t.me/${CONFIG.MANAGER_TG}`:(Pf.kind==='max'&&CONFIG.MANAGER_MAX_URL)||`https://t.me/+${CONFIG.MANAGER_PHONE}`);break;
+    case 'share':share();break;
+    case 'addSheet':{const p=sheetProduct;
+      if(state.mode==='retail'&&sizesOf(p).length&&!sheetSize){toast('Выберите размер');document.querySelector('.sizes')?.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:280});return}
+      addToCart(p.id,state.mode,state.mode==='retail'?sheetSize:'',sheetQty);closeSheet();break}
+    case 'order':placeOrder();break;
+    case 'reopen':openLink(managerUrl(state.lastOrder.text));break;
+    case 'copyOrder':copy(state.lastOrder.text);break;
+    case 'finish':state.cart=[];saveCart();closeSheet();go('home');toast('Спасибо! Менеджер скоро ответит');break;
+  }
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('.card[data-open]'))openSheet('product',+e.target.dataset.open);if(e.key==='Escape'&&state.sheet)closeSheet()});
+document.addEventListener('change',e=>{if(e.target.id==='ads')state.ads=e.target.checked});
+let qt;$('#q').addEventListener('input',e=>{clearTimeout(qt);qt=setTimeout(()=>{state.q=e.target.value;renderCatalog()},150)});
+
+/* ═════════════ Старт ═════════════ */
+(async function boot(){
+  const bar=$('#loaderBar');bar.style.width='35%';
+  const t0=Date.now();
+  await initPlatform();bar.style.width='70%';
+  if(Pf.user){
+    $('#hello').textContent='Привет, '+(Pf.user.first_name||'');
+    const a=$('#ava');a.textContent=(Pf.user.first_name||'M')[0].toUpperCase();
+    if(Pf.user.photo_url&&/^https:\/\//.test(Pf.user.photo_url))a.innerHTML=`<img src="${esc(Pf.user.photo_url)}" alt="">`;
+  }
+  document.querySelectorAll('.seg [data-mode]').forEach(b=>b.classList.toggle('on',b.dataset.mode===state.mode));
+  if(!CONFIG.RETAIL_ENABLED){$('#modeSeg').hidden=true;$('#chatLabel').hidden=false}
+  renderHome();renderCatalog();updateBadge();closingGuard();
+  const pm=Pf.start.match(/p(\d+)/);
+  await Promise.race([Promise.all([...document.querySelectorAll('#fan img')].map(i=>i.decode?i.decode().catch(()=>{}):0)),new Promise(r=>setTimeout(r,1800))]);
+  bar.style.width='100%';
+  setTimeout(()=>{$('#loader').classList.add('hide');if(pm&&byId(+pm[1]))openSheet('product',+pm[1])},Math.max(250,900-(Date.now()-t0)));
+})();
+</script>
+</body>
+</html>

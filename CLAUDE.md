@@ -243,3 +243,17 @@ const products = [
 3. Все анимации из списка выше
 4. Проверь мобильную версию (768px и 375px)
 5. `git add . && git commit -m "feat: initial Milana shop complete"`
+
+---
+
+## Мини-приложение Telegram + MAX (`app/`, ветка design/fly-miniapp)
+
+- Один веб-код для Telegram Mini App, MAX и браузера: `app/index.html` (HTML+CSS+JS), каталог `app/data.js`, фото `app/img/p<id>.webp`.
+- Только опт: `CONFIG.RETAIL_ENABLED = false` (розница отключена, код сохранён — включить, когда будут отобраны открытые модели и размеры).
+- Настройки — блок `CONFIG` в начале скрипта: `MANAGER_TG`, `RETAIL_MARKUP` (временная наценка для розницы), `SELLER`, `APP_LINK_TG`, `HIDE_IDS` (id 1–14 скрыты: у них фото товаров 101–116).
+- Заказ без формы и без сервера: текст заказа → чат менеджера (`t.me/<username>?text=`). Корзина в localStorage с try/catch.
+- Параметры запуска: `startapp=p<id>` — открыть товар, `r<userId>` — реферал (попадает в текст заказа).
+- Документы: `app/legal/oferta.html`, `privacy.html`, `consent-ads.html` (жёлтые поля `.ph` — заполнить).
+- Шаблоны аватара канала и поста: `app/brand-tools/`.
+- Общие правила, юр-регламент и скиллы — `~/.claude/MASTER-RULES.md` (раздел 0 = индекс).
+- Известные проблемы основного сайта: `submitOrder()` не отправляет заказ; ссылки «Оферта» и «Политика» ведут на один файл; дубли id 1–14.
