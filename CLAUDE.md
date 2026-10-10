@@ -249,7 +249,8 @@ const products = [
 ## Мини-приложение Telegram + MAX (`app/`, ветка design/fly-miniapp)
 
 - Один веб-код для Telegram Mini App, MAX и браузера: `app/index.html` (HTML+CSS+JS), каталог `app/data.js`, фото `app/img/p<id>.webp`.
-- Настройки — блок `CONFIG` в начале скрипта: `MANAGER_TG`, `RETAIL_MARKUP` (временная наценка), `SELLER`, `APP_LINK_TG`, `HIDE_IDS` (id 1–14 скрыты: у них фото товаров 101–116).
+- Только опт: `CONFIG.RETAIL_ENABLED = false` (розница отключена, код сохранён — включить, когда будут отобраны открытые модели и размеры).
+- Настройки — блок `CONFIG` в начале скрипта: `MANAGER_TG`, `RETAIL_MARKUP` (временная наценка для розницы), `SELLER`, `APP_LINK_TG`, `HIDE_IDS` (id 1–14 скрыты: у них фото товаров 101–116).
 - Заказ без формы и без сервера: текст заказа → чат менеджера (`t.me/<username>?text=`). Корзина в localStorage с try/catch.
 - Параметры запуска: `startapp=p<id>` — открыть товар, `r<userId>` — реферал (попадает в текст заказа).
 - Документы: `app/legal/oferta.html`, `privacy.html`, `consent-ads.html` (жёлтые поля `.ph` — заполнить).

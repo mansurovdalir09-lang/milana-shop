@@ -70,6 +70,7 @@ a{color:inherit}
 .pill--user .ava img{width:100%;height:100%;object-fit:cover}
 .pill--user span{overflow:hidden;text-overflow:ellipsis}
 .pill--user svg{flex:none;opacity:.45}
+.seg[hidden],#chatLabel[hidden]{display:none}
 .seg{height:44px;border-radius:22px;background:var(--card);box-shadow:var(--shadow-soft);display:flex;padding:4px;flex:none}
 .seg button{border-radius:18px;padding:0 13px;font-size:14px;font-weight:500;color:var(--muted);transition:background .25s,color .25s}
 .seg button.on{background:var(--green);color:var(--white)}
@@ -246,20 +247,20 @@ a{color:inherit}
         <span class="ava" id="ava">M</span><span id="hello">Профиль</span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg>
       </button>
-      <div class="seg" role="group" aria-label="Тип покупки">
+      <div class="seg" id="modeSeg" role="group" aria-label="Тип покупки">
         <button data-mode="opt">Опт</button><button data-mode="retail">Розница</button>
       </div>
       <button class="pill pill--chat" data-act="chat" aria-label="Написать менеджеру">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13" width="5" height="7" rx="2"/><rect x="16.5" y="13" width="5" height="7" rx="2"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13" width="5" height="7" rx="2"/><rect x="16.5" y="13" width="5" height="7" rx="2"/></svg><span id="chatLabel" hidden>Менеджер</span>
       </button>
     </div>
 
     <button class="hero" data-go="catalog" data-cat="Все">
-      <span class="tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/></svg>Новая поставка</span>
+      <span class="tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z"/></svg>Опт · от 1 упаковки</span>
       <span class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
       <span class="fan" id="fan"></span>
       <h1>Хлопок из&nbsp;Узбекистана</h1>
-      <p id="heroSub">Пижамы, сорочки, туники и&nbsp;халаты. Оптом от&nbsp;1&nbsp;упаковки и&nbsp;в&nbsp;розницу.</p>
+      <p id="heroSub">Пижамы, сорочки, туники и&nbsp;халаты упаковками по&nbsp;3–6&nbsp;шт, в&nbsp;каждой — размерный ряд.</p>
     </button>
 
     <div class="grid2" id="tiles"></div>
@@ -274,8 +275,8 @@ a{color:inherit}
     <div class="rail" id="rail"></div>
 
     <button class="banner banner--light" data-act="share">
-      <b>Поделиться с&nbsp;подругой</b>
-      <span id="shareText">Отправьте ссылку на&nbsp;магазин — менеджер увидит, от&nbsp;кого пришёл заказ.</span>
+      <b>Поделиться магазином</b>
+      <span id="shareText">Отправьте ссылку знакомым продавцам — менеджер увидит, от&nbsp;кого пришёл заказ.</span>
       <em>Отправить ссылку →</em>
     </button>
 
@@ -326,6 +327,7 @@ const CONFIG = {
   MANAGER_MAX_URL: '',            // ссылка на чат менеджера в MAX
   APP_LINK_TG: '',                // прямая ссылка на мини-апп: https://t.me/<бот>/<имя_приложения> — нужна для «Поделиться»
   CHANNEL_TG: '',                 // ссылка на канал, например https://t.me/milana_nsk
+  RETAIL_ENABLED: false,          // розница выключена: включить true, когда будут отобраны открытые модели и размеры
   RETAIL_MARKUP: 1.6,             // ВРЕМЕННО: розница = опт за шт × 1.6, округление до …90 ₽. Замените своими ценами (поле retail в data.js).
   HIDE_IDS: [1,2,3,4,5,6,7,8,9,10,11,12,13,14], // старые карточки с чужими фото (дубли 101–116) — скрыты, пока не исправлены
   HERO_IDS: [131,141,120],        // фото на большой карточке
@@ -348,8 +350,8 @@ const plural=(n,a,b,c)=>{n=Math.abs(n)%100;const m=n%10;return n>10&&n<20?c:m>1&
 const store={get(k,d){try{const v=localStorage.getItem('milana-app-'+k);return v?JSON.parse(v):d}catch(e){return d}},
              set(k,v){try{localStorage.setItem('milana-app-'+k,JSON.stringify(v))}catch(e){}}};
 
-const state={page:'home',mode:store.get('mode','retail'),cat:'Все',q:'',
-  cart:store.get('cart',[]).filter(i=>byId(i.id)),delivery:store.get('delivery','СДЭК'),ads:false,sheet:null,lastOrder:null};
+const state={page:'home',mode:CONFIG.RETAIL_ENABLED?store.get('mode','opt'):'opt',cat:'Все',q:'',
+  cart:store.get('cart',[]).filter(i=>byId(i.id)&&(CONFIG.RETAIL_ENABLED||i.mode==='opt')),delivery:store.get('delivery','СДЭК'),ads:false,sheet:null,lastOrder:null};
 
 /* ═════════════ Платформа: Telegram / MAX / браузер ═════════════ */
 const Pf={kind:'web',api:null,user:null,start:''};
@@ -426,7 +428,8 @@ function renderHome(){
       ${p?img(p,'tile__img'):''}<span class="tile__t">${esc(t.cat)}</span><span class="tile__s">${n} ${plural(n,'модель','модели','моделей')}</span></button>`}).join('');
   const hits=[...ALL.filter(p=>p.brand==="Milana").slice(0,6),...ALL.filter(p=>p.badge)].slice(0,10);
   $('#rail').innerHTML=hits.map(cardHTML).join('');
-  $('#bannerOpt').style.display=state.mode==='opt'?'none':'';
+  $('#bannerOpt').style.display=(CONFIG.RETAIL_ENABLED&&state.mode==='opt')?'none':'';
+  if(!CONFIG.RETAIL_ENABLED)$('#bannerOpt em').textContent='Открыть каталог →';
   $('#foot').innerHTML=`${esc(CONFIG.SELLER)}<br><a href="legal/oferta.html">Публичная оферта</a> · <a href="legal/privacy.html">Политика обработки персональных данных</a>`;
 }
 function renderChips(){
@@ -487,7 +490,7 @@ function orderText(no){
   lines.push('',`Итого: ${rub(total())} без доставки`,`Получение: ${state.delivery}`);
   if(state.delivery!=='Самовывоз')lines.push('Город и адрес: ');
   lines.push(`Подборки и скидки: ${state.ads?'да, согласна(ен) получать':'нет'}`);
-  const ref=(Pf.start.match(/r(\d+)/)||[])[1];if(ref)lines.push(`Пришла по ссылке от: ${ref}`);
+  const ref=(Pf.start.match(/r(\d+)/)||[])[1];if(ref)lines.push(`По ссылке от: ${ref}`);
   return lines.join('\n');
 }
 function managerUrl(text){
@@ -526,7 +529,7 @@ function productSheet(){
   return `<div class="pimg">${img(p)}</div>
    <div class="card__brand" style="margin-top:14px">${esc(p.brand)} · ${esc(p.cat)} · арт. ${p.id}</div>
    <h2 class="pname">${esc(p.name)}</h2>
-   <div class="seg" style="margin-top:14px;display:inline-flex" role="group" aria-label="Тип покупки"><button data-mode="opt" class="${opt?'on':''}">Опт</button><button data-mode="retail" class="${opt?'':'on'}">Розница</button></div>
+   ${CONFIG.RETAIL_ENABLED?`<div class="seg" style="margin-top:14px;display:inline-flex" role="group" aria-label="Тип покупки"><button data-mode="opt" class="${opt?'on':''}">Опт</button><button data-mode="retail" class="${opt?'':'on'}">Розница</button></div>`:''}
    ${opt
      ?`<div class="pprice"><b>${rub(p.packPrice)}</b><span>за упаковку · ${p.pack} шт × ${rub(p.opt)}</span></div>
        <p class="pnote">В упаковке размерный ряд${p.sizes?' '+esc(p.sizes):''}${p.minOrder?'. Минимальный заказ '+esc(p.minOrder):''}. Цвета и принты в упаковке могут отличаться — уточнит менеджер.</p>`
@@ -540,7 +543,7 @@ function infoSheet(){
   const name=Pf.user?esc([Pf.user.first_name,Pf.user.last_name].filter(Boolean).join(' ')):'Гость';
   return `<h2 class="pname" style="margin-top:4px">${name}</h2>
    <div class="info">
-     <p>Milana — домашняя одежда из хлопка с фабрик Узбекистана. Продаём оптом упаковками и в розницу, отгружаем по всей России.</p>
+     <p>Milana — домашняя одежда из хлопка с фабрик Узбекистана. Продаём оптом упаковками${CONFIG.RETAIL_ENABLED?' и в розницу':''}, отгружаем по всей России.</p>
      ${CONFIG.CHANNEL_TG?`<button class="lnk" data-link="${esc(CONFIG.CHANNEL_TG)}">Наш канал с новинками<span>→</span></button>`:''}
      <button class="lnk" data-act="chat">Написать менеджеру<span>→</span></button>
      <a href="tel:+${CONFIG.MANAGER_PHONE}">Позвонить: +${CONFIG.MANAGER_PHONE.replace(/(\d)(\d{3})(\d{3})(\d{2})(\d{2})/,'$1 $2 $3-$4-$5')}<span>→</span></a>
@@ -565,7 +568,7 @@ function share(){
   const uid=Pf.user&&Pf.user.id;
   const base=CONFIG.APP_LINK_TG||location.origin+location.pathname;
   const link=CONFIG.APP_LINK_TG?(uid?`${base}?startapp=r${uid}`:base):(uid?`${base}?start=r${uid}`:base);
-  const text='Пижамы, сорочки и туники из хлопка — Milana. Опт и розница, доставка по России';
+  const text='Milana — пижамы, сорочки, туники и халаты из хлопка оптом. Упаковки с размерным рядом, доставка по России';
   if(Pf.kind==='tg'){openLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`);return}
   if(Pf.kind==='max'&&Pf.api.shareContent){try{Pf.api.shareContent({text,link});return}catch(e){}}
   if(navigator.share){navigator.share({title:'Milana',text,url:link}).catch(()=>{});return}
@@ -590,7 +593,7 @@ document.addEventListener('click',e=>{
   if(d.open){openSheet('product',+d.open);return}
   if(d.go){if(state.sheet)closeSheet();go(d.go,{cat:d.cat});return}
   if(d.mode){setMode(d.mode);return}
-  if(d.modeSwitch){setMode(d.modeSwitch);go('catalog',{cat:'Все'});return}
+  if(d.modeSwitch){if(CONFIG.RETAIL_ENABLED)setMode(d.modeSwitch);go('catalog',{cat:'Все'});return}
   if(d.chip){state.cat=d.chip;haptic('light');renderCatalog();return}
   if(d.inc||d.dec){const i=state.cart.find(x=>x.key===(d.inc||d.dec));if(!i)return;i.qty=Math.max(1,Math.min(99,i.qty+(d.inc?1:-1)));haptic('light');saveCart();renderCart();return}
   if(d.del){state.cart=state.cart.filter(x=>x.key!==d.del);haptic('medium');saveCart();renderCart();return}
@@ -627,6 +630,7 @@ let qt;$('#q').addEventListener('input',e=>{clearTimeout(qt);qt=setTimeout(()=>{
     if(Pf.user.photo_url&&/^https:\/\//.test(Pf.user.photo_url))a.innerHTML=`<img src="${esc(Pf.user.photo_url)}" alt="">`;
   }
   document.querySelectorAll('.seg [data-mode]').forEach(b=>b.classList.toggle('on',b.dataset.mode===state.mode));
+  if(!CONFIG.RETAIL_ENABLED){$('#modeSeg').hidden=true;$('#chatLabel').hidden=false}
   renderHome();renderCatalog();updateBadge();closingGuard();
   const pm=Pf.start.match(/p(\d+)/);
   await Promise.race([Promise.all([...document.querySelectorAll('#fan img')].map(i=>i.decode?i.decode().catch(()=>{}):0)),new Promise(r=>setTimeout(r,1800))]);
