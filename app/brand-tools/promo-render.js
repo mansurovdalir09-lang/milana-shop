@@ -11,7 +11,7 @@ const fs = require('fs'), path = require('path'), os = require('os');
   const fps = 30, dir = fs.mkdtempSync(path.join(os.tmpdir(), 'promo-'));
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
-  await page.goto(`http://localhost:8765/brand-tools/promo.html?frame=1&${query}`);
+  await page.goto(`http://localhost:8765/${process.env.PAGE || 'brand-tools/promo.html'}?frame=1&${query}`); // PAGE=brand-tools/appvideo/scene.html — ролик про мини-апп
   await page.evaluate(() => window.ready);
   const duration = await page.evaluate(() => window.DURATION);
   const frames = Math.round(duration * fps);
