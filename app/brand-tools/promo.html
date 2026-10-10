@@ -72,7 +72,7 @@ const rub=n=>Math.round(n).toLocaleString('ru-RU')+' ₽';
 const SPOT=(q.get('spot')||'141,126,131').split(',').map(by).filter(Boolean).slice(0,3);
 document.getElementById('phone').textContent=q.get('contact')||'+7 953 890-66-64';
 const HOME=P.filter(p=>['Пижамы','Сорочки','Туники','Халаты'].includes(p.cat));
-document.getElementById('s2sub').textContent=`${HOME.length} моделей · упаковки по 5–6 шт с размерным рядом`;
+document.getElementById('s2sub').textContent=`${HOME.length} моделей · упаковки по 6 шт с размерным рядом`;
 /* лента: только фото Milana на моделях */
 const pool=P.filter(p=>p.brand==='Milana'&&![155,156,159,121,128,133,136].includes(p.id));
 const colsEl=document.getElementById('cols');

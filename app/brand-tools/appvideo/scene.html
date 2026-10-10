@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<title>Milana — ролик про мини-апп</title>
+<!-- Ролик 1080×1920: телефон с реальными экранами мини-аппа (shots/, снимает capture.js).
+     window.render(t) — кадр на секунде t. ?d=8 длительностей сцен (подгоняются под озвучку).
+     ?contact=+7 953 890-66-64  ?link=текст под QR -->
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+:root{--bg:#F5EDE3;--card:#FBF7F2;--deep:#A87A52;--gd:#3D4A35;--beige-l:#E8D5C0;--dark:#1A1410;--muted:#7A6B5E;--red:#C44049}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg);font-family:'Jost',sans-serif;color:var(--dark)}
+#v{position:relative;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(70% 45% at 50% 55%,#FBF3E9 0%,rgba(251,243,233,0) 70%),var(--bg)}
+.serif{font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:-.01em}
+/* заголовок-хук */
+#hook{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:46px;text-align:center}
+#icon{width:250px;height:250px;border-radius:66px;display:grid;place-items:center;background:linear-gradient(160deg,#FFFDFB,#F1E6DA);border:2px solid rgba(196,149,106,.45);box-shadow:0 40px 80px -36px rgba(168,122,82,.7)}
+#icon img{width:170px}
+#hook h1{font-size:104px;line-height:.95}
+#hook .tg{display:inline-flex;align-items:center;gap:18px;padding:22px 40px;border-radius:60px;background:#2AABEE;color:#fff;font-size:44px;font-weight:600}
+/* подписи */
+#cap{position:absolute;left:70px;right:70px;top:96px;text-align:center}
+#cap h2{font-size:76px;line-height:1}
+#cap p{font-size:36px;color:var(--muted);margin-top:14px}
+/* телефон */
+#phone{position:absolute;left:210px;top:400px;width:660px;height:1400px;border-radius:96px;background:#1C1714;padding:20px;box-shadow:0 60px 120px -50px rgba(40,28,18,.75),inset 0 0 0 3px #3A322C;transform-origin:50% 0}
+#screen{position:relative;width:620px;height:1360px;border-radius:78px;overflow:hidden;background:var(--bg)}
+#island{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:190px;height:54px;border-radius:30px;background:#000;z-index:20}
+.tgbar{position:absolute;top:96px;left:22px;right:22px;display:flex;justify-content:space-between;z-index:15}
+.tgbar span{height:54px;border-radius:27px;background:rgba(40,32,26,.55);color:#fff;font-size:24px;display:flex;align-items:center;gap:10px;padding:0 22px;backdrop-filter:blur(6px)}
+.shot{position:absolute;left:0;top:64px;width:620px;will-change:transform,opacity}
+.shot.full{height:1342px;object-fit:cover;object-position:top}
+#tabbar{position:absolute;left:0;top:1185px;width:620px;z-index:10}
+#tap{position:absolute;width:110px;height:110px;margin:-55px 0 0 -55px;border-radius:50%;background:rgba(61,74,53,.28);border:4px solid rgba(255,255,255,.9);z-index:30;pointer-events:none}
+/* финал */
+#cta{position:absolute;left:70px;right:70px;top:1010px;padding:50px;border-radius:56px;background:var(--card);box-shadow:0 40px 80px -40px rgba(61,45,30,.55);display:flex;gap:44px;align-items:center}
+#cta img.qr{width:300px;height:300px;border-radius:24px}
+#cta h3{font-size:64px;line-height:1}
+#cta p{font-size:34px;color:var(--muted);margin-top:16px;line-height:1.3}
+#cta b{color:var(--gd)}
+#endlogo{position:absolute;left:50%;bottom:120px;width:330px;transform:translateX(-50%)}
+</style></head>
+<body><div id="v">
+  <div id="hook"><div id="icon"><img src="../../mark.svg" alt=""></div><h1 class="serif">Каталог Milana —<br>теперь в&nbsp;Telegram</h1><div class="tg"><svg width="44" height="44" viewBox="0 0 24 24" fill="#fff"><path d="M21.4 4.3 2.9 11.4c-1.3.5-1.2 1.3-.2 1.6l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.4-1.1z"/></svg>Мини-приложение</div></div>
+  <div id="cap"><h2 class="serif" id="capH"></h2><p id="capP"></p></div>
+  <div id="phone"><div id="screen">
+    <div id="island"></div>
+    
+    <img class="shot full" id="sLoader" src="shots/1-loader.webp">
+    <img class="shot full" id="sHome" src="shots/2-home.webp">
+    <img class="shot full" id="sHome2" src="shots/3-home2.webp">
+    <img class="shot" id="sCat" src="shots/5-catalog-full.webp">
+    <img id="tabbar" src="shots/6-tabbar.webp">
+    <img class="shot full" id="sProd" src="shots/7-product.webp">
+    <img class="shot full" id="sCart" src="shots/8-cart.webp">
+    <img class="shot full" id="sCart2" src="shots/9-cart-bottom.webp">
+    <img class="shot full" id="sDone" src="shots/10-done.webp">
+    <div id="tap"></div>
+  </div></div>
+  <div id="cta"><img class="qr" src="qr-app.png" alt=""><div><h3 class="serif">Откройте каталог</h3><p>Наведите камеру на QR-код или напишите нам:</p><p style="white-space:nowrap;margin-top:8px"><b id="contact"></b></p></div></div>
+  <img id="endlogo" src="../../logo.svg" alt="">
+</div>
+<script>
+const q=new URLSearchParams(location.search);
+document.getElementById('contact').textContent=q.get('contact')||'+7 953 890-66-64';
+const D=(q.get('d')||'3.4,4.2,5.4,4.6,4.8,4.4,5.2,0').split(',').map(Number);
+const E=D.reduce((a,x)=>(a.push(a[a.length-1]+x),a),[0]); // начала сцен
+const S=i=>[E[i],E[i+1]];
+const DURATION=E[E.length-1]+ (D[7]||0);
+let BOX={};fetch('shots/boxes.json').then(r=>r.json()).then(b=>BOX=b);
+const K=620/390; // css-пиксель приложения → пиксель экрана
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), prog=(t,a,b)=>clamp((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3), eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const back=x=>{const c1=1.4,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const $=s=>document.getElementById(s);
+const show=(id,o,ty=0)=>{const e=$(id);e.style.opacity=o;e.style.visibility=o<=.001?'hidden':'visible';e.style.transform=`translateY(${ty}px)`};
+const CAPS=[null,['Открывается прямо в Telegram','Без сайта и регистрации'],['Все модели — с ценой за упаковку','Пижамы, сорочки, туники, халаты'],
+ ['Размерный ряд в каждой упаковке','Выберите количество — и в корзину'],['Заказ из разных моделей','Самовывоз, СДЭК или Почта России'],
+ ['Заказ уходит менеджеру','Одним сообщением — останется отправить'],null];
+let lastCap=-1;
+function caption(t){let i=-1;for(let k=1;k<=5;k++)if(t>=E[k]-.1&&t<E[k+1]-.1)i=k;
+  const el=$('cap');if(i<0){el.style.opacity=0;return}
+  if(i!==lastCap){$('capH').textContent=CAPS[i][0];$('capP').textContent=CAPS[i][1];lastCap=i}
+  const p=eo(prog(t,E[i]-.1,E[i]+.4)), out=1-eo(prog(t,E[i+1]-.45,E[i+1]-.1));el.style.opacity=Math.min(p,out);el.style.transform=`translateY(${(1-p)*30}px)`}
+function tap(t,at,pt){const e=$('tap');if(!pt){e.style.opacity=0;return}const p=prog(t,at,at+.55);
+  e.style.left=pt.x*K+'px';e.style.top=(pt.y*K+64)+'px';e.style.opacity=p>0&&p<1?(1-p):0;e.style.transform=`scale(${.6+.8*p})`}
+
+window.render=function(t){
+  // 0. хук
+  const [h0,h1]=S(0);const hk=$('hook');const hin=eo(prog(t,0,.6)),hout=eio(prog(t,h1-.6,h1));
+  hk.style.opacity=hin*(1-hout);hk.style.transform=`translateY(${-hout*200}px)`;hk.style.visibility=hin*(1-hout)>0?'visible':'hidden';
+  const ic=prog(t,.1,.8);$('icon').style.transform=`scale(${ic?back(ic):0}) rotate(${(1-eo(ic))*-12}deg)`;
+  // телефон: въезд снизу, в финале уменьшается вверх
+  const pin=eo(prog(t,h1-.6,h1+.4));const [f0]=S(6);const fin=eio(prog(t,f0,f0+.9));
+  $('phone').style.transform=`translateY(${(1-pin)*1700 - fin*330}px) scale(${1-fin*.42})`;
+  caption(t);
+  // 1. загрузка → главная
+  const [a1,b1]=S(1);show('sLoader',t<a1+1.1?1:0);show('sHome',eo(prog(t,a1+.9,a1+1.4)));
+  const hs=eio(prog(t,a1+2.3,b1-.2));show('sHome2',hs);
+  
+  // 2. каталог: тап по вкладке, лента прокручивается
+  const [a2,b2]=S(2);tap(t,a2+.1,BOX.tabCatalog);
+  const cIn=eo(prog(t,a2+.4,a2+.8));const scroll=eio(prog(t,a2+1.2,b2-.3))*2600;
+  show('sCat',cIn,-scroll);$('tabbar').style.opacity=(t>=a1+.9&&t<S(3)[0]+.3)?1:0;
+  // 3. товар: лист снизу, тап «Добавить упаковку»
+  const [a3,b3]=S(3);const pr=eo(prog(t,a3+.2,a3+.75));show('sProd',pr>0?1:0,(1-pr)*1342);tap(t,a3+2.2,BOX.addBtn);
+  // 4. корзина
+  const [a4,b4]=S(4);const ca=eo(prog(t,a4,a4+.5));show('sCart',ca);const cb=eio(prog(t,a4+1.8,a4+2.6));show('sCart2',cb);tap(t,b4-.75,BOX.orderBtn);
+  // 5. готово
+  const [a5,b5]=S(5);const dn=eo(prog(t,a5,a5+.6));show('sDone',dn>0?1:0,(1-dn)*1342);
+  if(t>=a5){['sCart','sCart2'].forEach(id=>$(id).style.opacity=1)}
+  // 6. финал
+  const cta=eo(prog(t,f0+.5,f0+1.2));const el=$('cta');el.style.opacity=cta;el.style.transform=`translateY(${(1-cta)*120}px)`;
+  const lg=eo(prog(t,f0+.9,f0+1.5));$('endlogo').style.opacity=lg;
+};
+window.DURATION=E[7];
+window.ready=Promise.all([document.fonts.ready,fetch('shots/boxes.json').then(r=>r.json()).then(b=>BOX=b),...[...document.images].map(i=>i.decode?i.decode().catch(()=>{}):0)]);
+render(0);
+if(!q.has('frame')){const t0=performance.now();(function loop(){render(((performance.now()-t0)/1000)%window.DURATION);requestAnimationFrame(loop)})()}
+</script></body></html>
