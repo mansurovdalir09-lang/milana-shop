@@ -410,7 +410,7 @@ function syncBack(){backBtn(!!state.sheet||state.page!=='home')}
 const img=(p,cls='')=>`<img ${cls?`class="${cls}"`:''} src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy" decoding="async" width="600" height="800">`;
 function priceHTML(p){
   return state.mode==='opt'
-    ? `<div class="card__price">${rub(p.packPrice)} / уп.</div><div class="card__sub">${p.pack} шт × ${rub(p.opt)}</div>`
+    ? `<div class="card__price">${rub(p.packPrice)} / уп.</div><div class="card__sub">${p.pack} шт в упаковке${p.sizes?' · '+esc(p.sizes):''}</div>`
     : `<div class="card__price">${rub(retail(p))}</div><div class="card__sub">${p.sizes?'Размеры '+esc(p.sizes):'Единый размер'}</div>`;
 }
 function cardHTML(p){
@@ -531,7 +531,7 @@ function productSheet(){
    <h2 class="pname">${esc(p.name)}</h2>
    ${CONFIG.RETAIL_ENABLED?`<div class="seg" style="margin-top:14px;display:inline-flex" role="group" aria-label="Тип покупки"><button data-mode="opt" class="${opt?'on':''}">Опт</button><button data-mode="retail" class="${opt?'':'on'}">Розница</button></div>`:''}
    ${opt
-     ?`<div class="pprice"><b>${rub(p.packPrice)}</b><span>за упаковку · ${p.pack} шт × ${rub(p.opt)}</span></div>
+     ?`<div class="pprice"><b>${rub(p.packPrice)}</b><span>за упаковку · ${p.pack} шт</span></div>
        <p class="pnote">В упаковке размерный ряд${p.sizes?' '+esc(p.sizes):''}${p.minOrder?'. Минимальный заказ '+esc(p.minOrder):''}. Цвета и принты в упаковке могут отличаться — уточнит менеджер.</p>`
      :`<div class="pprice"><b>${rub(retail(p))}</b><span>за 1 шт</span></div>
        ${sz.length?`<div class="label">Размер</div><div class="sizes">${sz.map(s=>`<button class="size" data-size="${esc(s)}">${esc(s)}</button>`).join('')}</div>`:''}`}
