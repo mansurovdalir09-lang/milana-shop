@@ -1,7 +1,8 @@
 // Сборка промо-ролика Milana в MP4 (H.264, 1080×1920, 30 кадров/с) для WhatsApp.
 // Из папки app/:  python3 -m http.server 8765   (в отдельном окне)
 // затем:          node brand-tools/promo-render.js "spot=141,126,131" milana-promo.mp4
-// Нужны Playwright и ffmpeg (с libx264).
+// Нужны Playwright и ffmpeg (с libx264). С озвучкой: python brand-tools/voice/make_voice.py → d=... →
+//   node brand-tools/promo-render.js "spot=141,126,131&d=<длительности>" video.mp4 → ffmpeg -i video.mp4 -i voice_track.wav -c:v copy -c:a aac -shortest out.mp4
 const { chromium } = require(process.env.PW_PATH || 'playwright');
 const { execFileSync } = require('child_process');
 const fs = require('fs'), path = require('path'), os = require('os');
