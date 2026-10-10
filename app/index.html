@@ -281,7 +281,7 @@ a{color:inherit}
     </button>
 
     <div class="facts">
-      <div class="fact"><i>🚚</i><span>Доставка по&nbsp;России: СДЭК и&nbsp;Почта России. Стоимость считает менеджер.</span></div>
+      <div class="fact"><i>🚚</i><span>Доставка по&nbsp;России: СДЭК, ТК&nbsp;«Энергия» или «Байт-Транзит». Стоимость считает менеджер.</span></div>
       <div class="fact"><i>📍</i><span>Самовывоз: Новосибирск, ТК «Восток», ул.&nbsp;Дегтярёва, 19, ряд 19, места 61–63.</span></div>
     </div>
     <p class="foot" id="foot"></p>
@@ -350,8 +350,9 @@ const plural=(n,a,b,c)=>{n=Math.abs(n)%100;const m=n%10;return n>10&&n<20?c:m>1&
 const store={get(k,d){try{const v=localStorage.getItem('milana-app-'+k);return v?JSON.parse(v):d}catch(e){return d}},
              set(k,v){try{localStorage.setItem('milana-app-'+k,JSON.stringify(v))}catch(e){}}};
 
+const DELIVERY=['Самовывоз','СДЭК','ТК «Энергия»','ТК «Байт-Транзит»']; // способы получения (Почтой России не отправляем)
 const state={page:'home',mode:CONFIG.RETAIL_ENABLED?store.get('mode','opt'):'opt',cat:'Все',q:'',
-  cart:store.get('cart',[]).filter(i=>byId(i.id)&&(CONFIG.RETAIL_ENABLED||i.mode==='opt')),delivery:store.get('delivery','СДЭК'),ads:false,sheet:null,lastOrder:null};
+  cart:store.get('cart',[]).filter(i=>byId(i.id)&&(CONFIG.RETAIL_ENABLED||i.mode==='opt')),delivery:DELIVERY.includes(store.get('delivery'))?store.get('delivery'):'СДЭК',ads:false,sheet:null,lastOrder:null};
 
 /* ═════════════ Платформа: Telegram / MAX / браузер ═════════════ */
 const Pf={kind:'web',api:null,user:null,start:''};
@@ -471,7 +472,7 @@ function renderCart(){
       <div class="line__row"><div class="step"><button data-dec="${esc(i.key)}" aria-label="Меньше">−</button><b>${i.qty}</b><button data-inc="${esc(i.key)}" aria-label="Больше">+</button></div>
       <span class="line__sum">${rub(linePrice(i)*i.qty)}</span></div></div>
       <button class="line__x" data-del="${esc(i.key)}" aria-label="Удалить"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>`}).join('')+
-  `<div class="box"><h3>Получение</h3><div class="opts">${['Самовывоз','СДЭК','Почта России'].map(d=>`<button class="chip ${d===state.delivery?'on':''}" data-deliv="${d}">${d}</button>`).join('')}</div>
+  `<div class="box"><h3>Получение</h3><div class="opts">${DELIVERY.map(d=>`<button class="chip ${d===state.delivery?'on':''}" data-deliv="${d}">${d}</button>`).join('')}</div>
      <p class="muted" style="font-size:13px;margin-top:10px">${state.delivery==='Самовывоз'?'ТК «Восток», Новосибирск. Время согласуем в чате.':'Город и адрес напишете менеджеру в чате, он посчитает доставку.'}</p></div>
    <div class="box"><div class="row"><span class="muted">Товары</span><span>${rub(total())}</span></div>
      <div class="row"><span class="muted">Доставка</span><span>${state.delivery==='Самовывоз'?'бесплатно':'по тарифу перевозчика'}</span></div>
